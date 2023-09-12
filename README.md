@@ -3,7 +3,7 @@ This is a boilerplate base repository for a Gin Golang API with Swagger document
 
 ##  Local Machine Setup (Linux)
 Follow these steps to set up the project on your local machine:
-- Clone project from `https://github.com/lushiv/go-gin-api-boilerplate.git`
+- Clone project from `git clone https://github.com/lushiv/go-gin-api-boilerplate.git`
 - Go the `cd go-gin-api-boilerplate`
 - Install all Dependencies using `go get ./...`
 - After that Make the script executable using `chmod +x start_server.sh`
