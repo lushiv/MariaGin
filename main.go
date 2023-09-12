@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 
 	"go-gin-api-boilerplate/db"               // Import your database package
 	_ "go-gin-api-boilerplate/docs"           // Import generated docs package
@@ -43,6 +44,13 @@ func main() {
 	}
 	defer database.Close() // Close the database connection when the application exits
 	r := gin.Default()
+
+	// Read the PORT environment variable or default to 3000
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "3000" // Default port
+	}
+
 	// HealthCheck route
 	r.GET("/health-check", HealthCheck)
 	// Swagger documentation setup
@@ -54,7 +62,7 @@ func main() {
 	restaurants.Initialize(database)
 	// Define API routes for restaurants
 	restaurants.RegisterRoutes(restaurantRoutes)
-	r.Run(":3000")
+	r.Run(":" + port)
 }
 
 // HealthCheck godoc
