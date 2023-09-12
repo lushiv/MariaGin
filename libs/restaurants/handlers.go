@@ -10,7 +10,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// GetRestaurants handles the GET /restaurants route.
+type ErrorResponse struct {
+	Message string `json:"message"`
+}
+
+// @Summary Get a list of restaurants
+// @Description Get a list of all restaurants
+// @Tags Restaurants
+// @Accept json
+// @Produce json
+// @Success 200 {array} Restaurant
+// @Router /restaurants [get]
 func GetRestaurants(c *gin.Context) {
 	// Fetch and return a list of restaurants from the database.
 	restaurants, err := FetchRestaurantsFromDB()
@@ -21,7 +31,16 @@ func GetRestaurants(c *gin.Context) {
 	c.JSON(http.StatusOK, restaurants)
 }
 
-// AddRestaurant handles the POST /restaurants route.
+// @Summary Add a new restaurant
+// @Description Add a new restaurant to the database
+// @Tags Restaurants
+// @Accept json
+// @Produce json
+// @Param restaurant body Restaurant true "Restaurant object to add"
+// @Success 201 {object} Restaurant
+// @Failure 400 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /restaurants [post]
 func AddRestaurant(c *gin.Context) {
 	fmt.Println("Calling API :: AddRestaurant")
 	// Bind the request body to a Restaurant struct.
@@ -39,7 +58,17 @@ func AddRestaurant(c *gin.Context) {
 	c.JSON(http.StatusCreated, restaurant)
 }
 
-// UpdateRestaurant handles the PUT /restaurants/:id route.
+// @Summary Update a restaurant by ID
+// @Description Update an existing restaurant in the database by its ID
+// @Tags Restaurants
+// @Accept json
+// @Produce json
+// @Param id path int true "Restaurant ID to update"
+// @Param restaurant body Restaurant true "Updated restaurant object"
+// @Success 200 {object} Restaurant
+// @Failure 400 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /restaurants/{id} [put]
 func UpdateRestaurant(c *gin.Context) {
 	// Extract the restaurant ID from the URL parameter.
 	restaurantID, err := strconv.Atoi(c.Param("id"))
@@ -63,7 +92,16 @@ func UpdateRestaurant(c *gin.Context) {
 	c.JSON(http.StatusOK, updatedRestaurant)
 }
 
-// DeleteRestaurant handles the DELETE /restaurants/:id route.
+// @Summary Delete a restaurant by ID
+// @Description Delete a restaurant from the database by its ID
+// @Tags Restaurants
+// @Accept json
+// @Produce json
+// @Param id path int true "Restaurant ID to delete"
+// @Success 204 "No Content"
+// @Failure 400 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /restaurants/{id} [delete]
 func DeleteRestaurant(c *gin.Context) {
 	// Extract the restaurant ID from the URL parameter.
 	restaurantID, err := strconv.Atoi(c.Param("id"))

@@ -19,3 +19,11 @@
 
 # Go workspace file
 go.work
+
+# Ignore documentation-related files
+/docs
+/swagger
+
+# Add any other documentation-related directories or files you want to ignore
+# /docs-generated
+# /custom-docs-file.html

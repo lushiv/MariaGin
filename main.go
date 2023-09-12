@@ -1,11 +1,12 @@
 package main
 
 import (
-	 _ "github.com/lushiv/go-gin-api-boilerplate/docs"
-	"go-gin-api-boilerplate/db"
-	"go-gin-api-boilerplate/libs/restaurants"
 	"log"
 	"net/http"
+
+	"go-gin-api-boilerplate/db"               // Import your database package
+	_ "go-gin-api-boilerplate/docs"           // Import generated docs package
+	"go-gin-api-boilerplate/libs/restaurants" // Import your API package
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -13,9 +14,9 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-// @title Gin Swagger Example API
+// @title Go Gin API Boilerplate
 // @version 2.0
-// @description This is a sample server server.
+// @description This is a sample boilerplate server.
 // @termsOfService http://swagger.io/terms/
 
 // @contact.name API Support
@@ -41,34 +42,32 @@ func main() {
 		log.Fatalf("Failed to initialize the database: %v", err)
 	}
 	defer database.Close() // Close the database connection when the application exits
-
 	r := gin.Default()
-
-	// Routes
-	r.GET("/", HealthCheck)
+	// HealthCheck route
+	r.GET("/health-check", HealthCheck)
+	// Swagger documentation setup
 	r.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
 	// Create a router group for restaurant routes
 	restaurantRoutes := r.Group("/restaurants")
 	// Initialize the database connection for the restaurants package
 	restaurants.Initialize(database)
 	// Define API routes for restaurants
 	restaurants.RegisterRoutes(restaurantRoutes)
-
 	r.Run(":3000")
 }
 
 // HealthCheck godoc
-// @Summary Show the status of server.
+// @Summary HealthCheck
 // @Description get the status of server.
-// @Tags root
+// @Tags Health Check
 // @Accept */*
 // @Produce json
 // @Success 200 {object} map[string]interface{}
-// @Router / [get]
+// @Router /health-check [get]
 func HealthCheck(c *gin.Context) {
 	res := map[string]interface{}{
 		"data": "Server is up and running",
 	}
-
 	c.JSON(http.StatusOK, res)
 }

@@ -1,19 +1,36 @@
 basePath: /
+definitions:
+  go-gin-api-boilerplate_libs_restaurants.Restaurant:
+    properties:
+      id:
+        type: integer
+      location:
+        type: string
+      name:
+        type: string
+      rating:
+        type: number
+    type: object
+  restaurants.ErrorResponse:
+    properties:
+      message:
+        type: string
+    type: object
 host: localhost:3000
 info:
   contact:
     email: support@swagger.io
     name: API Support
     url: http://www.swagger.io/support
-  description: This is a sample server server.
+  description: This is a sample boilerplate server.
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   termsOfService: http://swagger.io/terms/
-  title: Gin Swagger Example API
+  title: Go Gin API Boilerplate
   version: "2.0"
 paths:
-  /:
+  /health-check:
     get:
       consumes:
       - '*/*'
@@ -26,9 +43,116 @@ paths:
           schema:
             additionalProperties: true
             type: object
-      summary: Show the status of server.
+      summary: HealthCheck
       tags:
-      - root
+      - Health Check
+  /restaurants:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of all restaurants
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/go-gin-api-boilerplate_libs_restaurants.Restaurant'
+            type: array
+      summary: Get a list of restaurants
+      tags:
+      - Restaurants
+    post:
+      consumes:
+      - application/json
+      description: Add a new restaurant to the database
+      parameters:
+      - description: Restaurant object to add
+        in: body
+        name: restaurant
+        required: true
+        schema:
+          $ref: '#/definitions/go-gin-api-boilerplate_libs_restaurants.Restaurant'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/go-gin-api-boilerplate_libs_restaurants.Restaurant'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/restaurants.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/restaurants.ErrorResponse'
+      summary: Add a new restaurant
+      tags:
+      - Restaurants
+  /restaurants/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a restaurant from the database by its ID
+      parameters:
+      - description: Restaurant ID to delete
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/restaurants.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/restaurants.ErrorResponse'
+      summary: Delete a restaurant by ID
+      tags:
+      - Restaurants
+    put:
+      consumes:
+      - application/json
+      description: Update an existing restaurant in the database by its ID
+      parameters:
+      - description: Restaurant ID to update
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Updated restaurant object
+        in: body
+        name: restaurant
+        required: true
+        schema:
+          $ref: '#/definitions/go-gin-api-boilerplate_libs_restaurants.Restaurant'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/go-gin-api-boilerplate_libs_restaurants.Restaurant'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/restaurants.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/restaurants.ErrorResponse'
+      summary: Update a restaurant by ID
+      tags:
+      - Restaurants
 schemes:
 - http
 swagger: "2.0"
