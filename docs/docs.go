@@ -24,6 +24,75 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/auth/login": {
+            "post": {
+                "description": "Log in a customer and generate a JWT token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Log in a customer",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/auth.LoginResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/logout": {
+            "post": {
+                "description": "Log out a customer",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Log out a customer",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/auth.RegisterResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/register": {
+            "post": {
+                "description": "Register a new customer and generate a JWT token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Register a new customer",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/auth.RegisterResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/health-check": {
             "get": {
                 "description": "get the status of server.",
@@ -67,7 +136,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/go-gin-api-boilerplate_routes_restaurants.Restaurant"
+                                "$ref": "#/definitions/restaurants.Restaurant"
                             }
                         }
                     }
@@ -92,7 +161,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/go-gin-api-boilerplate_routes_restaurants.Restaurant"
+                            "$ref": "#/definitions/restaurants.Restaurant"
                         }
                     }
                 ],
@@ -100,7 +169,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/go-gin-api-boilerplate_routes_restaurants.Restaurant"
+                            "$ref": "#/definitions/restaurants.Restaurant"
                         }
                     },
                     "400": {
@@ -145,7 +214,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/go-gin-api-boilerplate_routes_restaurants.Restaurant"
+                            "$ref": "#/definitions/restaurants.Restaurant"
                         }
                     }
                 ],
@@ -153,7 +222,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/go-gin-api-boilerplate_routes_restaurants.Restaurant"
+                            "$ref": "#/definitions/restaurants.Restaurant"
                         }
                     },
                     "400": {
@@ -212,7 +281,34 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "go-gin-api-boilerplate_routes_restaurants.Restaurant": {
+        "auth.LoginResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "auth.RegisterResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "restaurants.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "restaurants.Restaurant": {
             "type": "object",
             "properties": {
                 "id": {
@@ -226,14 +322,6 @@ const docTemplate = `{
                 },
                 "rating": {
                     "type": "number"
-                }
-            }
-        },
-        "restaurants.ErrorResponse": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string"
                 }
             }
         }

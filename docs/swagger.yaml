@@ -1,6 +1,23 @@
 basePath: /
 definitions:
-  go-gin-api-boilerplate_routes_restaurants.Restaurant:
+  auth.LoginResponse:
+    properties:
+      message:
+        type: string
+      token:
+        type: string
+    type: object
+  auth.RegisterResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  restaurants.ErrorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  restaurants.Restaurant:
     properties:
       id:
         type: integer
@@ -10,11 +27,6 @@ definitions:
         type: string
       rating:
         type: number
-    type: object
-  restaurants.ErrorResponse:
-    properties:
-      message:
-        type: string
     type: object
 host: localhost:3000
 info:
@@ -30,6 +42,51 @@ info:
   title: Go Gin API Boilerplate
   version: "2.0"
 paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Log in a customer and generate a JWT token
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/auth.LoginResponse'
+      summary: Log in a customer
+      tags:
+      - Authentication
+  /auth/logout:
+    post:
+      consumes:
+      - application/json
+      description: Log out a customer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/auth.RegisterResponse'
+      summary: Log out a customer
+      tags:
+      - Authentication
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Register a new customer and generate a JWT token
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/auth.RegisterResponse'
+      summary: Register a new customer
+      tags:
+      - Authentication
   /health-check:
     get:
       consumes:
@@ -58,7 +115,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/go-gin-api-boilerplate_routes_restaurants.Restaurant'
+              $ref: '#/definitions/restaurants.Restaurant'
             type: array
       summary: Get a list of restaurants
       tags:
@@ -73,14 +130,14 @@ paths:
         name: restaurant
         required: true
         schema:
-          $ref: '#/definitions/go-gin-api-boilerplate_routes_restaurants.Restaurant'
+          $ref: '#/definitions/restaurants.Restaurant'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/go-gin-api-boilerplate_routes_restaurants.Restaurant'
+            $ref: '#/definitions/restaurants.Restaurant'
         "400":
           description: Bad Request
           schema:
@@ -134,14 +191,14 @@ paths:
         name: restaurant
         required: true
         schema:
-          $ref: '#/definitions/go-gin-api-boilerplate_routes_restaurants.Restaurant'
+          $ref: '#/definitions/restaurants.Restaurant'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/go-gin-api-boilerplate_routes_restaurants.Restaurant'
+            $ref: '#/definitions/restaurants.Restaurant'
         "400":
           description: Bad Request
           schema:

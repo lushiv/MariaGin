@@ -5,11 +5,12 @@ import (
 	"net/http"
 	"os"
 
-	"go-gin-api-boilerplate/db"     // Import your database package
-	_ "go-gin-api-boilerplate/docs" // Import generated docs package
-	"go-gin-api-boilerplate/routes/auth"
+	"go-gin-api-boilerplate/db"                 // Import your database package
+	_ "go-gin-api-boilerplate/docs"             // Import generated docs package
+	"go-gin-api-boilerplate/routes/auth"        // Import your API package
 	"go-gin-api-boilerplate/routes/restaurants" // Import your API package
 
+	// Import your API package
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	swaggerFiles "github.com/swaggo/files"
@@ -52,19 +53,20 @@ func main() {
 		port = "3000" // Default port
 	}
 
-	// HealthCheck route
-	r.GET("/health-check", HealthCheck)
 	// Swagger documentation setup
 	r.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
-	authGroup := r.Group("/auth")
+	// HealthCheck route
+	r.GET("/health-check", HealthCheck)
 
-	// Define authentication routes
-	authGroup.POST("/login", auth.LoginCustomer)
-	authGroup.POST("/logout", auth.LogoutCustomer)
+	// Create a router group for auth routes
+	authRoutes := r.Group("/auth")
+	auth.Initialize(database)
+	auth.RegisterRoutes(authRoutes)
 
 	// Create a router group for restaurant routes
 	restaurantRoutes := r.Group("/restaurants")
+	restaurants.Initialize(database)
 	restaurants.RegisterRoutes(restaurantRoutes)
 
 	r.Run(":" + port)
