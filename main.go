@@ -5,8 +5,9 @@ import (
 	"net/http"
 	"os"
 
-	"go-gin-api-boilerplate/db"                 // Import your database package
-	_ "go-gin-api-boilerplate/docs"             // Import generated docs package
+	"go-gin-api-boilerplate/db"     // Import your database package
+	_ "go-gin-api-boilerplate/docs" // Import generated docs package
+	"go-gin-api-boilerplate/routes/auth"
 	"go-gin-api-boilerplate/routes/restaurants" // Import your API package
 
 	"github.com/gin-gonic/gin"
@@ -56,12 +57,16 @@ func main() {
 	// Swagger documentation setup
 	r.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
+	authGroup := r.Group("/auth")
+
+	// Define authentication routes
+	authGroup.POST("/login", auth.LoginCustomer)
+	authGroup.POST("/logout", auth.LogoutCustomer)
+
 	// Create a router group for restaurant routes
 	restaurantRoutes := r.Group("/restaurants")
-	// Initialize the database connection for the restaurants package
-	restaurants.Initialize(database)
-	// Define API routes for restaurants
 	restaurants.RegisterRoutes(restaurantRoutes)
+
 	r.Run(":" + port)
 }
 
