@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"os"
 
-	"go-gin-api-boilerplate/db"               // Import your database package
-	_ "go-gin-api-boilerplate/docs"           // Import generated docs package
-	"go-gin-api-boilerplate/libs/restaurants" // Import your API package
+	"go-gin-api-boilerplate/db"                 // Import your database package
+	_ "go-gin-api-boilerplate/docs"             // Import generated docs package
+	"go-gin-api-boilerplate/routes/restaurants" // Import your API package
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"

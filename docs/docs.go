@@ -67,7 +67,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/go-gin-api-boilerplate_libs_restaurants.Restaurant"
+                                "$ref": "#/definitions/go-gin-api-boilerplate_routes_restaurants.Restaurant"
                             }
                         }
                     }
@@ -92,7 +92,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/go-gin-api-boilerplate_libs_restaurants.Restaurant"
+                            "$ref": "#/definitions/go-gin-api-boilerplate_routes_restaurants.Restaurant"
                         }
                     }
                 ],
@@ -100,7 +100,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/go-gin-api-boilerplate_libs_restaurants.Restaurant"
+                            "$ref": "#/definitions/go-gin-api-boilerplate_routes_restaurants.Restaurant"
                         }
                     },
                     "400": {
@@ -145,7 +145,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/go-gin-api-boilerplate_libs_restaurants.Restaurant"
+                            "$ref": "#/definitions/go-gin-api-boilerplate_routes_restaurants.Restaurant"
                         }
                     }
                 ],
@@ -153,7 +153,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/go-gin-api-boilerplate_libs_restaurants.Restaurant"
+                            "$ref": "#/definitions/go-gin-api-boilerplate_routes_restaurants.Restaurant"
                         }
                     },
                     "400": {
@@ -212,7 +212,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "go-gin-api-boilerplate_libs_restaurants.Restaurant": {
+        "go-gin-api-boilerplate_routes_restaurants.Restaurant": {
             "type": "object",
             "properties": {
                 "id": {

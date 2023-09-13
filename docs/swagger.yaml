@@ -1,6 +1,6 @@
 basePath: /
 definitions:
-  go-gin-api-boilerplate_libs_restaurants.Restaurant:
+  go-gin-api-boilerplate_routes_restaurants.Restaurant:
     properties:
       id:
         type: integer
@@ -58,7 +58,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/go-gin-api-boilerplate_libs_restaurants.Restaurant'
+              $ref: '#/definitions/go-gin-api-boilerplate_routes_restaurants.Restaurant'
             type: array
       summary: Get a list of restaurants
       tags:
@@ -73,14 +73,14 @@ paths:
         name: restaurant
         required: true
         schema:
-          $ref: '#/definitions/go-gin-api-boilerplate_libs_restaurants.Restaurant'
+          $ref: '#/definitions/go-gin-api-boilerplate_routes_restaurants.Restaurant'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/go-gin-api-boilerplate_libs_restaurants.Restaurant'
+            $ref: '#/definitions/go-gin-api-boilerplate_routes_restaurants.Restaurant'
         "400":
           description: Bad Request
           schema:
@@ -134,14 +134,14 @@ paths:
         name: restaurant
         required: true
         schema:
-          $ref: '#/definitions/go-gin-api-boilerplate_libs_restaurants.Restaurant'
+          $ref: '#/definitions/go-gin-api-boilerplate_routes_restaurants.Restaurant'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/go-gin-api-boilerplate_libs_restaurants.Restaurant'
+            $ref: '#/definitions/go-gin-api-boilerplate_routes_restaurants.Restaurant'
         "400":
           description: Bad Request
           schema:
