@@ -1,4 +1,4 @@
-# Go Gin Back-end app boilerplate
+# Go Gin Back-end App Boilerplate
 This is a boilerplate base repository for a Gin Golang API with Swagger documentation and MariaDB MySQL, including all the required packages and necessary helpers for a complete backend project using Gin. 
 
 ## Implemented Stacks
