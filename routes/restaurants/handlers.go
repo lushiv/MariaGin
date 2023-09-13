@@ -16,7 +16,7 @@ type ErrorResponse struct {
 
 // @Summary Get a list of restaurants
 // @Description Get a list of all restaurants
-// @Tags Restaurants
+// @Tags CRUD API Sample: Restaurant
 // @Accept json
 // @Produce json
 // @Success 200 {array} Restaurant
@@ -33,7 +33,7 @@ func GetRestaurants(c *gin.Context) {
 
 // @Summary Add a new restaurant
 // @Description Add a new restaurant to the database
-// @Tags Restaurants
+// @Tags CRUD API Sample: Restaurant
 // @Accept json
 // @Produce json
 // @Param restaurant body Restaurant true "Restaurant object to add"
@@ -60,7 +60,7 @@ func AddRestaurant(c *gin.Context) {
 
 // @Summary Update a restaurant by ID
 // @Description Update an existing restaurant in the database by its ID
-// @Tags Restaurants
+// @Tags CRUD API Sample: Restaurant
 // @Accept json
 // @Produce json
 // @Param id path int true "Restaurant ID to update"
@@ -94,7 +94,7 @@ func UpdateRestaurant(c *gin.Context) {
 
 // @Summary Delete a restaurant by ID
 // @Description Delete a restaurant from the database by its ID
-// @Tags Restaurants
+// @Tags CRUD API Sample: Restaurant
 // @Accept json
 // @Produce json
 // @Param id path int true "Restaurant ID to delete"

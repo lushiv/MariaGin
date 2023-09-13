@@ -4,6 +4,7 @@ package restaurants
 
 import (
 	"database/sql"
+	"fmt"
 
 	"github.com/gin-gonic/gin"
 )
@@ -56,12 +57,11 @@ func FetchRestaurantsFromDB() ([]Restaurant, error) {
 	return restaurants, nil
 }
 
-// InsertRestaurantIntoDB inserts a new restaurant into the database.
 func InsertRestaurantIntoDB(restaurant Restaurant) error {
-	// Insert the restaurant into the database without the 'description' field.
 	_, err := db.Exec("INSERT INTO restaurants (name, location, rating) VALUES (?, ?, ?)",
 		restaurant.Name, restaurant.Location, restaurant.Rating)
 	if err != nil {
+		fmt.Printf("Error inserting restaurant: %v", err)
 		return err
 	}
 	return nil

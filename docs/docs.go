@@ -58,7 +58,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Restaurants"
+                    "CRUD API Sample: Restaurant"
                 ],
                 "summary": "Get a list of restaurants",
                 "responses": {
@@ -82,7 +82,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Restaurants"
+                    "CRUD API Sample: Restaurant"
                 ],
                 "summary": "Add a new restaurant",
                 "parameters": [
@@ -128,7 +128,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Restaurants"
+                    "CRUD API Sample: Restaurant"
                 ],
                 "summary": "Update a restaurant by ID",
                 "parameters": [
@@ -179,7 +179,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Restaurants"
+                    "CRUD API Sample: Restaurant"
                 ],
                 "summary": "Delete a restaurant by ID",
                 "parameters": [

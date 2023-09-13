@@ -62,7 +62,7 @@ paths:
             type: array
       summary: Get a list of restaurants
       tags:
-      - Restaurants
+      - 'CRUD API Sample: Restaurant'
     post:
       consumes:
       - application/json
@@ -91,7 +91,7 @@ paths:
             $ref: '#/definitions/restaurants.ErrorResponse'
       summary: Add a new restaurant
       tags:
-      - Restaurants
+      - 'CRUD API Sample: Restaurant'
   /restaurants/{id}:
     delete:
       consumes:
@@ -118,7 +118,7 @@ paths:
             $ref: '#/definitions/restaurants.ErrorResponse'
       summary: Delete a restaurant by ID
       tags:
-      - Restaurants
+      - 'CRUD API Sample: Restaurant'
     put:
       consumes:
       - application/json
@@ -152,7 +152,7 @@ paths:
             $ref: '#/definitions/restaurants.ErrorResponse'
       summary: Update a restaurant by ID
       tags:
-      - Restaurants
+      - 'CRUD API Sample: Restaurant'
 schemes:
 - http
 swagger: "2.0"
