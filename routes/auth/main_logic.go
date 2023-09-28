@@ -26,6 +26,24 @@ func RegisterUser(c *gin.Context) {
 		return
 	}
 
+	// Check if the email is valid.
+	if !ValidateEmail(req.Email) {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid email address"})
+		return
+	}
+
+	// Check if the email already exists in the database.
+	if emailExists(req.Email) {
+		c.JSON(http.StatusConflict, gin.H{"error": "Email already exists"})
+		return
+	}
+
+	// Check if the phone already exists in the database.
+	if phoneNumberExists(req.Email) {
+		c.JSON(http.StatusConflict, gin.H{"error": "Phone number already exists"})
+		return
+	}
+
 	// Create a UserInsertData struct from the request.
 	userData := TblUsers{
 		UUID:       uuid.New().String(),

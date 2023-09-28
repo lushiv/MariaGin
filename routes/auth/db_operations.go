@@ -22,3 +22,29 @@ func InsertUserIntoDB(user TblUsers) error {
 	}
 	return nil
 }
+
+// Check if the email already exists in the database.
+func emailExists(email string) bool {
+	// Perform a database query to check if the email exists.
+	query := "SELECT COUNT(*) FROM users WHERE email = ?"
+	var count int
+	err := db.QueryRow(query, email).Scan(&count)
+	if err != nil {
+		// Handle the error (e.g., log it or return false).
+		return false
+	}
+	return count > 0
+}
+
+// Check if the phone number already exists in the database.
+func phoneNumberExists(phone string) bool {
+	// Perform a database query to check if the phone number exists.
+	query := "SELECT COUNT(*) FROM users WHERE phone = ?"
+	var count int
+	err := db.QueryRow(query, phone).Scan(&count)
+	if err != nil {
+		// Handle the error (e.g., log it or return false).
+		return false
+	}
+	return count > 0
+}
