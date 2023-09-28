@@ -45,10 +45,11 @@ func (s *SendGridMailHelper) SendMail(message *MailMessage) (*SendGridMailRespon
 	if err != nil {
 		return nil, err
 	}
+	fmt.Println("response", response)
 
 	return &SendGridMailResponse{
 		Success: true,
-		Content: response,
+		Content: "response",
 	}, nil
 }
 
@@ -62,4 +63,5 @@ type MailMessage struct {
 // SendGridMailResponse represents a SendGrid email response.
 type SendGridMailResponse struct {
 	Success bool
+	Content string // Add this field if you want to store the content
 }

@@ -3,6 +3,9 @@ package auth
 import (
 	"database/sql"
 	"fmt"
+	"time"
+
+	"github.com/google/uuid"
 )
 
 var db *sql.DB
@@ -47,4 +50,56 @@ func phoneNumberExists(phone string) bool {
 		return false
 	}
 	return count > 0
+}
+
+// Define a constant for token expiry duration in minutes
+const TokenExpiryMinutes = 60
+
+// InsertValidateTokenIntoDB inserts a validation token into the database.
+func InsertValidateTokenIntoDB(data TblValidateToken) error {
+	// Replace this with your actual database insertion logic.
+	// Assume db is a database connection that you have established.
+
+	// Prepare the SQL query
+	query := `
+		INSERT INTO validate_token (uuid, user_id, token, used, expiry_time)
+		VALUES (?, ?, ?, ?, ?)
+	`
+
+	// Execute the SQL query with the provided data
+	_, err := db.Exec(query,
+		data.UUID, data.UserID, data.Token, data.Used, data.ExpiryTime)
+
+	if err != nil {
+		fmt.Printf("Error inserting user into 'validate_token' table: %v", err)
+		return err
+	}
+
+	return nil
+}
+
+// InsertValidateToken inserts a validation token into the database.
+func InsertValidateToken(userID int, token string, otp string) error {
+	// Generate a new UUID for the token
+	uuid := uuid.New().String()
+
+	// Calculate the token expiry time (you can customize this as needed)
+	expiryTime := time.Now().Add(time.Minute * time.Duration(TokenExpiryMinutes))
+
+	// Prepare the data for insertion
+	data := TblValidateToken{
+		UUID:   uuid,
+		UserID: userID,
+		Token:  token,
+		Used:   0,
+		// OTP:      otp, // You can include OTP if needed
+		ExpiryTime: expiryTime, // Assign the expiry time directly as time.Time
+	}
+
+	// Insert the data into the database
+	if err := InsertValidateTokenIntoDB(data); err != nil {
+		return err
+	}
+
+	return nil
 }

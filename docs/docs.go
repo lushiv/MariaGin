@@ -297,9 +297,6 @@ const docTemplate = `{
             "properties": {
                 "message": {
                     "type": "string"
-                },
-                "token": {
-                    "type": "string"
                 }
             }
         },
@@ -307,6 +304,9 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "message": {
+                    "type": "string"
+                },
+                "token": {
                     "type": "string"
                 }
             }

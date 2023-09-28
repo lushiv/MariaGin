@@ -3,10 +3,35 @@ package auth
 import (
 	"net/http"
 
-	"github.com/google/uuid"
+	common_utils "go-gin-api-boilerplate/utils"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
+
+// insertValidateToken: (call, userId, token, debug, otp) => {
+//             try {
+//                 const idGenerator = require(`${global._commonsDir}/helpers/random-id-generator.helper`);
+
+//                 const tableName = moduleConfig.table_name.validate_token;
+
+//                 let dt = new Date();
+//                 dt.setMinutes(dt.getMinutes() + parseInt(process.env.TOKEN_EXPIRY_TIME));
+//                 const dataObj = {
+//                     uuid: idGenerator.generateUuid(),
+//                     user_id: userId,
+//                     token: token,
+//                     otp : otp,
+//                     expiry_time: dt.getTime(),
+//                     created_on: Date.now()
+//                 }
+//                 return dbInsertHelper.saveInfo({ dbConnection: call.dbConnection, debug, dataObj, call, dataFields: moduleConfig.projectionFields.validateTokenInsert, tableName });
+//             } catch (error) {
+//                 throw error;
+//             }
+//         },
+
+//CUSTOMER_REGISTRATION_LINK = https://users-crypto_ktm.com/customer-register
 
 // @Summary Register a new customer
 // @Description Register a new customer and generate a JWT token
@@ -63,7 +88,37 @@ func RegisterUser(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{"message": "User registered successfully"})
+	// Generate a JWT token for the registered user.
+	userInfo := common_utils.UserInfo{
+		ID:   userData.UUID,
+		Role: "user", // You can set the user's role as needed.
+	}
+	jwtToken, err := common_utils.GenerateJWTToken(userInfo)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate JWT token"})
+		return
+	}
+
+	// Generate an OTP (replace 'yourSecretOTP' with your actual OTP secret).
+	otpCode, err := common_utils.GenerateOTP("JBSWY3DPEHPK3PXP")
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate OTP"})
+		return
+	}
+
+	// Insert the validation token into the database
+	if err := InsertValidateToken(1, jwtToken, otpCode); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to insert validation token"})
+		return
+	}
+	// Return the response including the JWT token
+	response := RegisterResponse{
+		Message: "User registered successfully",
+		Token:   jwtToken,
+	}
+
+	c.JSON(http.StatusCreated, response)
+
 }
 
 // @Summary Log in a customer
@@ -76,8 +131,8 @@ func RegisterUser(c *gin.Context) {
 func LoginCustomer(c *gin.Context) {
 	// Implement customer login logic here
 	// Verify customer credentials, generate and return a JWT token upon successful login
-	token := "your_generated_jwt_token"
-	c.JSON(http.StatusOK, LoginResponse{"Customer logged in successfully", token})
+	//token := "your_generated_jwt_token"
+	c.JSON(http.StatusOK, LoginResponse{"Customer logged in successfully"})
 }
 
 // @Summary Log out a customer
@@ -89,5 +144,5 @@ func LoginCustomer(c *gin.Context) {
 // @Router /auth/logout [post]
 func LogoutCustomer(c *gin.Context) {
 	// Implement customer logout logic here (optional)
-	c.JSON(http.StatusOK, RegisterResponse{"Customer logged out successfully"})
+	c.JSON(http.StatusOK, LoginResponse{"Customer logged out successfully"})
 }

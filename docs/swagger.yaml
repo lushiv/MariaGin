@@ -4,12 +4,12 @@ definitions:
     properties:
       message:
         type: string
-      token:
-        type: string
     type: object
   auth.RegisterResponse:
     properties:
       message:
+        type: string
+      token:
         type: string
     type: object
   auth.RegisterUserReq:

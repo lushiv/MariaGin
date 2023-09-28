@@ -1,5 +1,7 @@
 package auth
 
+import "time"
+
 // TblUsers represents the 'users' table.
 type TblUsers struct {
 	UUID         string `json:"uuid"`
@@ -37,13 +39,13 @@ type TblLoginSession struct {
 
 // TblValidateToken represents the 'validate_token' table.
 type TblValidateToken struct {
-	ID         int    `json:"id"`
-	UUID       string `json:"uuid"`
-	UserID     int    `json:"user_id"`
-	Token      string `json:"token"`
-	Used       int    `json:"used"`
-	ExpiryTime string `json:"expiry_time"`
-	CreatedAt  string `json:"created_at"`
-	DeletedAt  string `json:"deleted_at"`
-	Deleted    int    `json:"deleted"`
+	ID         int       `json:"id"`
+	UUID       string    `json:"uuid"`
+	UserID     int       `json:"user_id"`
+	Token      string    `json:"token"`
+	Used       int       `json:"used"`
+	ExpiryTime time.Time `json:"expiry_time"`
+	CreatedAt  string    `json:"created_at"`
+	DeletedAt  string    `json:"deleted_at"`
+	Deleted    int       `json:"deleted"`
 }

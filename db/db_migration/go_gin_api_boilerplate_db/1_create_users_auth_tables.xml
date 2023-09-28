@@ -61,7 +61,7 @@
             </column>
             <column name="uuid" type="varchar(36)"/>
             <column name="user_id" type="int"/>
-            <column name="token" type="varchar(32)"/>
+            <column name="token" type="varchar(500)"/>
             <column name="used" type="tinyint" defaultValue="0"/>
             <column name="expiry_time" type="DATETIME"/>
             <column name="created_at" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
