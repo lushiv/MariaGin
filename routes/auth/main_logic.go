@@ -9,30 +9,6 @@ import (
 	"github.com/google/uuid"
 )
 
-// insertValidateToken: (call, userId, token, debug, otp) => {
-//             try {
-//                 const idGenerator = require(`${global._commonsDir}/helpers/random-id-generator.helper`);
-
-//                 const tableName = moduleConfig.table_name.validate_token;
-
-//                 let dt = new Date();
-//                 dt.setMinutes(dt.getMinutes() + parseInt(process.env.TOKEN_EXPIRY_TIME));
-//                 const dataObj = {
-//                     uuid: idGenerator.generateUuid(),
-//                     user_id: userId,
-//                     token: token,
-//                     otp : otp,
-//                     expiry_time: dt.getTime(),
-//                     created_on: Date.now()
-//                 }
-//                 return dbInsertHelper.saveInfo({ dbConnection: call.dbConnection, debug, dataObj, call, dataFields: moduleConfig.projectionFields.validateTokenInsert, tableName });
-//             } catch (error) {
-//                 throw error;
-//             }
-//         },
-
-//CUSTOMER_REGISTRATION_LINK = https://users-crypto_ktm.com/customer-register
-
 // @Summary Register a new customer
 // @Description Register a new customer and generate a JWT token
 // @Tags Authentication
