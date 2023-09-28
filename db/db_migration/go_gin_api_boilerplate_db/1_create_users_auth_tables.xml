@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- Create the Users table -->
+    <changeSet author="janak" id="1_create_users_table">
+        <createTable tableName="users">
+            <column name="uuid" type="varchar(36)">
+                <constraints nullable="false" unique="true"/>
+                </column>
+                <column name="email" type="varchar(100)"> </column>
+                <column name="first_name" type="varchar(100)"> </column>
+                <column name="middle_name" type="varchar(100)"> </column>
+                <column name="last_name" type="varchar(100)"> </column>
+                <column name="phone" type="varchar(100)"> </column>
+                <column name="type" type=" "> </column>
+                <column name="password" type="varchar(200)"> </column>
+                <column name="profile_pic" type="varchar(200)"> </column>
+                <column name="gender" type="int"> </column>
+                <column name="status" type="int"> </column>
+                <column name="deleted" type="tinyint" defaultValue="0"/>
+                <column name="two_fa_enabled" type="tinyint" defaultValue="0"/>
+                <column name="created_at" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
+                <column name="created_by" type="int"/>
+                <column name="updated_at" type="DATETIME" defaultValueComputed="NULL ON UPDATE CURRENT_TIMESTAMP"/>
+                <column name="updated_by" type="int"/>
+                <column name="deleted_at" type="DATETIME"/>
+                <column name="deleted_by" type="int"/>
+        </createTable>
+    </changeSet>
+
+    <!-- Create the User login_session table for JWT -->
+    <changeSet author="janak" id="2_create_login_session_table">
+        <createTable tableName="login_session">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="uuid" type="varchar(36)">
+                <constraints nullable="false" unique="true"/>
+                </column>
+                <column name="token" type="text"/>
+                <column name="user_id" type="int"/>
+                <column name="session_expiry_timestamp" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
+                <column name="created_at" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
+                <column name="ip" type="varchar(200)"/>
+                <column name="deleted" type="tinyint" defaultValue="0"/>
+        </createTable>
+    </changeSet>
+
+    <!-- Create the validate_token table -->
+    <changeSet author="janak" id="3_create_validate_token_table">
+        <createTable tableName="validate_token">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="uuid" type="varchar(36)"/>
+            <column name="user_id" type="int"/>
+            <column name="token" type="varchar(32)"/>
+            <column name="used" type="tinyint" defaultValue="0"/>
+            <column name="expiry_time" type="DATETIME"/>
+            <column name="created_at" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="deleted_at" type="DATETIME"/>
+            <column name="deleted" type="tinyint" defaultValue="0"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

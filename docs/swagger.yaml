@@ -7,6 +7,16 @@ definitions:
       token:
         type: string
     type: object
+  auth.RegisterCustomerReq:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
   auth.RegisterResponse:
     properties:
       message:
@@ -77,6 +87,13 @@ paths:
       consumes:
       - application/json
       description: Register a new customer and generate a JWT token
+      parameters:
+      - description: Registration request
+        in: body
+        name: registerRequest
+        required: true
+        schema:
+          $ref: '#/definitions/auth.RegisterCustomerReq'
       produces:
       - application/json
       responses:

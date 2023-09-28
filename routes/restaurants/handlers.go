@@ -3,7 +3,6 @@
 package restaurants
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -42,7 +41,6 @@ func GetRestaurants(c *gin.Context) {
 // @Failure 500 {object} ErrorResponse
 // @Router /restaurants [post]
 func AddRestaurant(c *gin.Context) {
-	fmt.Println("Calling API :: AddRestaurant")
 	// Bind the request body to a Restaurant struct.
 	var restaurant Restaurant
 	if err := c.ShouldBindJSON(&restaurant); err != nil {

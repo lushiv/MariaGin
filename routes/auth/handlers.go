@@ -15,19 +15,41 @@ type LoginResponse struct {
 	Token   string `json:"token"`
 }
 
+type RegisterUserReq struct {
+	Username string `json:"username" binding:"required"`
+	Password string `json:"password" binding:"required"`
+}
+
 // @Summary Register a new customer
 // @Description Register a new customer and generate a JWT token
 // @Tags Authentication
 // @Accept json
 // @Produce json
+// @Param registerRequest body RegisterUserReq true "Registration request"
 // @Success 200 {object} RegisterResponse
 // @Router /auth/register [post]
-func RegisterCustomer(c *gin.Context) {
-	// Implement customer registration logic here
-	// Use your crypto helper to hash the password
-	// Save customer data in the database
-	// Generate and return a JWT token upon successful registration
-	c.JSON(http.StatusOK, RegisterResponse{"Customer registered successfully"})
+// RegisterUser handles user registration.
+func RegisterUser(c *gin.Context) {
+	var req RegisterUserReq
+
+	// Bind the request body to RegisterCustomerReq struct.
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Insert the user into the database.
+	user := User{
+		Username: req.Username,
+		Password: req.Password,
+	}
+
+	if err := InsertUserIntoDB(user); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to register user"})
+		return
+	}
+
+	c.JSON(http.StatusCreated, gin.H{"message": "User registered successfully"})
 }
 
 // @Summary Log in a customer
