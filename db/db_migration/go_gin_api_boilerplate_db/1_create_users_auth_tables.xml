@@ -8,6 +8,9 @@
     <!-- Create the Users table -->
     <changeSet author="janak" id="1_create_users_table">
         <createTable tableName="users">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
             <column name="uuid" type="varchar(36)">
                 <constraints nullable="false" unique="true"/>
                 </column>
@@ -16,7 +19,7 @@
                 <column name="middle_name" type="varchar(100)"> </column>
                 <column name="last_name" type="varchar(100)"> </column>
                 <column name="phone" type="varchar(100)"> </column>
-                <column name="type" type=" "> </column>
+                <column name="type" type="varchar(100)"/>
                 <column name="password" type="varchar(200)"> </column>
                 <column name="profile_pic" type="varchar(200)"> </column>
                 <column name="gender" type="int"> </column>

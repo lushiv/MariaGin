@@ -7,20 +7,32 @@ definitions:
       token:
         type: string
     type: object
-  auth.RegisterCustomerReq:
-    properties:
-      password:
-        type: string
-      username:
-        type: string
-    required:
-    - password
-    - username
-    type: object
   auth.RegisterResponse:
     properties:
       message:
         type: string
+    type: object
+  auth.RegisterUserReq:
+    properties:
+      email:
+        type: string
+      first_name:
+        type: string
+      gender:
+        type: integer
+      last_name:
+        type: string
+      middle_name:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      profile_pic:
+        type: string
+    required:
+    - email
+    - password
     type: object
   restaurants.ErrorResponse:
     properties:
@@ -93,7 +105,7 @@ paths:
         name: registerRequest
         required: true
         schema:
-          $ref: '#/definitions/auth.RegisterCustomerReq'
+          $ref: '#/definitions/auth.RegisterUserReq'
       produces:
       - application/json
       responses:

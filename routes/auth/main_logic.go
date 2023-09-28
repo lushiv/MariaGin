@@ -3,22 +3,10 @@ package auth
 import (
 	"net/http"
 
+	"github.com/google/uuid"
+
 	"github.com/gin-gonic/gin"
 )
-
-type RegisterResponse struct {
-	Message string `json:"message"`
-}
-
-type LoginResponse struct {
-	Message string `json:"message"`
-	Token   string `json:"token"`
-}
-
-type RegisterUserReq struct {
-	Username string `json:"username" binding:"required"`
-	Password string `json:"password" binding:"required"`
-}
 
 // @Summary Register a new customer
 // @Description Register a new customer and generate a JWT token
@@ -32,19 +20,27 @@ type RegisterUserReq struct {
 func RegisterUser(c *gin.Context) {
 	var req RegisterUserReq
 
-	// Bind the request body to RegisterCustomerReq struct.
+	// Bind the request body to RegisterUserReq struct.
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	// Insert the user into the database.
-	user := User{
-		Username: req.Username,
-		Password: req.Password,
+	// Create a UserInsertData struct from the request.
+	userData := TblUsers{
+		UUID:       uuid.New().String(),
+		Email:      req.Email,
+		FirstName:  req.FirstName,
+		MiddleName: req.MiddleName,
+		LastName:   req.LastName,
+		Phone:      req.Phone,
+		Password:   req.Password,
+		ProfilePic: req.ProfilePic,
+		Gender:     req.Gender,
 	}
 
-	if err := InsertUserIntoDB(user); err != nil {
+	// Insert the user into the database.
+	if err := InsertUserIntoDB(userData); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to register user"})
 		return
 	}
