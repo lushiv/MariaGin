@@ -37,11 +37,28 @@ const docTemplate = `{
                     "Authentication"
                 ],
                 "summary": "Log in a customer",
+                "parameters": [
+                    {
+                        "description": "Login request",
+                        "name": "LoginUserReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/auth.LoginUserReq"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/auth.LoginResponse"
+                            "$ref": "#/definitions/auth.LoginUserResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/auth.ErrorResponse"
                         }
                     }
                 }
@@ -292,10 +309,36 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "auth.LoginResponse": {
+        "auth.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                }
+            }
+        },
+        "auth.LoginUserReq": {
+            "type": "object",
+            "required": [
+                "email",
+                "password"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "auth.LoginUserResponse": {
             "type": "object",
             "properties": {
                 "message": {
+                    "type": "string"
+                },
+                "token": {
                     "type": "string"
                 }
             }

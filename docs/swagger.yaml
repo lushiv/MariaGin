@@ -1,8 +1,25 @@
 basePath: /
 definitions:
-  auth.LoginResponse:
+  auth.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  auth.LoginUserReq:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  auth.LoginUserResponse:
     properties:
       message:
+        type: string
+      token:
         type: string
     type: object
   auth.RegisterResponse:
@@ -69,13 +86,24 @@ paths:
       consumes:
       - application/json
       description: Log in a customer and generate a JWT token
+      parameters:
+      - description: Login request
+        in: body
+        name: LoginUserReq
+        required: true
+        schema:
+          $ref: '#/definitions/auth.LoginUserReq'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/auth.LoginResponse'
+            $ref: '#/definitions/auth.LoginUserResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/auth.ErrorResponse'
       summary: Log in a customer
       tags:
       - Authentication

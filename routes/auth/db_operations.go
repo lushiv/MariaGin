@@ -103,3 +103,38 @@ func InsertValidateToken(userID int, token string, otp string) error {
 
 	return nil
 }
+
+// Check if a user with the given email exists in the database.
+func checkUser(email string) bool {
+	query := "SELECT COUNT(*) FROM users WHERE email = ?"
+	var count int
+	err := db.QueryRow(query, email).Scan(&count)
+	if err != nil {
+		return false
+	}
+	return count > 0
+}
+
+// Fetch the user's ID by email from the database.
+func getUserIDByEmail(email string) (string, error) {
+	var userID string
+	query := "SELECT id FROM users WHERE email = ?"
+	err := db.QueryRow(query, email).Scan(&userID)
+	if err != nil {
+		// Handle the error (e.g., log it or return an empty string).
+		return "", err
+	}
+	return userID, nil
+}
+
+// Fetch the user's hashed password from the database.
+func getUserPassword(email string) string {
+	var hashedPassword string
+	query := "SELECT password FROM users WHERE email = ?"
+	err := db.QueryRow(query, email).Scan(&hashedPassword)
+	if err != nil {
+		// Handle the error (e.g., log it or return an empty string).
+		return ""
+	}
+	return hashedPassword
+}

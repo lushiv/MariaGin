@@ -17,6 +17,21 @@ type RegisterResponse struct {
 	Token   string `json:"token"`
 }
 
-type LoginResponse struct {
+type LoginUserReq struct {
+	Email    string `json:"email" binding:"required"`
+	Password string `json:"password" binding:"required"`
+}
+
+type LoginUserResponse struct {
+	Message string `json:"message"`
+	Token   string `json:"token,omitempty"`
+}
+
+// ErrorResponse represents an error response.
+type ErrorResponse struct {
+	Error string `json:"error"`
+}
+
+type commonResponse struct {
 	Message string `json:"message"`
 }

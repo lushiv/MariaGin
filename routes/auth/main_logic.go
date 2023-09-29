@@ -45,6 +45,13 @@ func RegisterUser(c *gin.Context) {
 		return
 	}
 
+	// Generate an OTP (replace 'yourSecretOTP' with your actual OTP secret).
+	hashedPassword, err := common_utils.GenerateHashPassword(req.Password)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate OTP"})
+		return
+	}
+
 	// Create a UserInsertData struct from the request.
 	userData := TblUsers{
 		UUID:       uuid.New().String(),
@@ -53,7 +60,7 @@ func RegisterUser(c *gin.Context) {
 		MiddleName: req.MiddleName,
 		LastName:   req.LastName,
 		Phone:      req.Phone,
-		Password:   req.Password,
+		Password:   hashedPassword,
 		ProfilePic: req.ProfilePic,
 		Gender:     req.Gender,
 	}
@@ -102,13 +109,52 @@ func RegisterUser(c *gin.Context) {
 // @Tags Authentication
 // @Accept json
 // @Produce json
-// @Success 200 {object} LoginResponse
+// @Param LoginUserReq body LoginUserReq true "Login request"
+// @Success 200 {object} LoginUserResponse
+// @Failure 401 {object} ErrorResponse
 // @Router /auth/login [post]
 func LoginCustomer(c *gin.Context) {
-	// Implement customer login logic here
-	// Verify customer credentials, generate and return a JWT token upon successful login
-	//token := "your_generated_jwt_token"
-	c.JSON(http.StatusOK, LoginResponse{"Customer logged in successfully"})
+	var req LoginUserReq
+
+	// Bind the request body to LoginUserReq struct.
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Check if the email exists in the database.
+	userID, err := getUserIDByEmail(req.Email)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid email or password"})
+		return
+	}
+
+	// Fetch the user's hashed password from the database.
+	hashedPassword := getUserPassword(req.Email)
+
+	// Verify the provided password against the hashed password.
+	if err := common_utils.VerifyPassword(req.Password, hashedPassword); err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid email or password"})
+		return
+	}
+	// Generate a JWT token for the logged-in customer.
+	userInfo := common_utils.UserInfo{
+		ID:   userID,
+		Role: "user", // You can set the customer's role as needed.
+	}
+	jwtToken, err := common_utils.GenerateJWTToken(userInfo)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate JWT token"})
+		return
+	}
+
+	// Return the JWT token in the response.
+	response := LoginUserResponse{
+		Message: "Customer logged in successfully",
+		Token:   jwtToken,
+	}
+
+	c.JSON(http.StatusOK, response)
 }
 
 // @Summary Log out a customer
@@ -117,8 +163,8 @@ func LoginCustomer(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Success 200 {object} RegisterResponse
-// @Router /auth/logout [post]
+// @Router /auth/logout [post]s
 func LogoutCustomer(c *gin.Context) {
 	// Implement customer logout logic here (optional)
-	c.JSON(http.StatusOK, LoginResponse{"Customer logged out successfully"})
+	c.JSON(http.StatusOK, commonResponse{"Customer logged out successfully"})
 }
