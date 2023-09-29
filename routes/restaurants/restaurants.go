@@ -5,6 +5,7 @@ package restaurants
 import (
 	"database/sql"
 	"fmt"
+	"go-gin-api-boilerplate/middleware"
 
 	"github.com/gin-gonic/gin"
 )
@@ -26,7 +27,7 @@ func Initialize(database *sql.DB) {
 
 // RegisterRoutes sets up restaurant-related API routes.
 func RegisterRoutes(router *gin.RouterGroup) {
-	router.GET("", GetRestaurants)
+	router.GET("", middleware.AuthMiddleware(), GetRestaurants)
 	router.POST("", AddRestaurant)
 	router.PUT("/:id", UpdateRestaurant)
 	router.DELETE("/:id", DeleteRestaurant)

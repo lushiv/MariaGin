@@ -178,6 +178,12 @@ paths:
       consumes:
       - application/json
       description: Get a list of all restaurants
+      parameters:
+      - description: Authorization token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -187,6 +193,8 @@ paths:
             items:
               $ref: '#/definitions/restaurants.Restaurant'
             type: array
+      security:
+      - ApiKeyAuth: []
       summary: Get a list of restaurants
       tags:
       - 'CRUD API Sample: Restaurant'

@@ -161,6 +161,11 @@ const docTemplate = `{
         },
         "/restaurants": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Get a list of all restaurants",
                 "consumes": [
                     "application/json"
@@ -172,6 +177,15 @@ const docTemplate = `{
                     "CRUD API Sample: Restaurant"
                 ],
                 "summary": "Get a list of restaurants",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authorization token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",

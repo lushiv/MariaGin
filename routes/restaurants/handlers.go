@@ -18,6 +18,10 @@ type ErrorResponse struct {
 // @Tags CRUD API Sample: Restaurant
 // @Accept json
 // @Produce json
+// @Security ApiKeyAuth
+// @In header
+// @Name Authorization
+// @Param Authorization header string true "Authorization token"
 // @Success 200 {array} Restaurant
 // @Router /restaurants [get]
 func GetRestaurants(c *gin.Context) {
