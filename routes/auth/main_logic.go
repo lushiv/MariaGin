@@ -185,7 +185,7 @@ func LoginCustomer(c *gin.Context) {
 // @Success 200 {object} commonResponse
 // @Router /auth/logout [post]
 func LogoutCustomer(c *gin.Context) {
-	fmt.Println("LogoutCustomer")
+	fmt.Println("LogoutCustomer :::::")
 	// Use the AuthMiddleware to verify authentication
 	userID, exists := c.Get("user")
 	if !exists {
@@ -193,20 +193,13 @@ func LogoutCustomer(c *gin.Context) {
 		return
 	}
 
-	// Extract user information from the userID
-	userIDInt, ok := userID.(int)
-	if !ok {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid user information"})
-		return
-	}
-
-	fmt.Println(userIDInt)
+	fmt.Println(userID)
 	// Get the session token from the JWT token
 	sessionToken := c.GetHeader("Authorization")
 
 	// Invalidate the session by marking it as deleted in the database
-	err := invalidateSession(sessionToken, userIDInt)
-	if err != false {
+	err := InvalidateSession(sessionToken)
+	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to logout"})
 		return
 	}

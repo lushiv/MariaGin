@@ -1,11 +1,9 @@
 package middleware
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
-	"go-gin-api-boilerplate/routes/auth"
 	common_utils "go-gin-api-boilerplate/utils" // Import your API package
 
 	"github.com/gin-gonic/gin"
@@ -24,7 +22,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		// Verify the JWT token
 		claims, err := common_utils.VerifyToken(tokenString)
 		if err != nil {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized", "message": err.Error()})
 			c.Abort()
 			return
 		}
@@ -46,12 +44,12 @@ func AuthMiddleware() gin.HandlerFunc {
 		}
 
 		// Check if the session is deleted or expired
-		errCheck := auth.IsSessionDeleted(tokenString, userIDInt)
-		if errCheck {
-			c.JSON(http.StatusConflict, gin.H{"error": "session error "})
+		sessionDeleted := common_utils.IsSessionDeleted(tokenString, userIDInt)
+		if sessionDeleted {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Session is deleted or expired"})
+			c.Abort()
 			return
 		}
-		fmt.Print("errCheck")
 
 		c.Set("user", userID) // Set "user" in the context
 		c.Next()

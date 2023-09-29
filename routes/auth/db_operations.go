@@ -182,15 +182,11 @@ func getUserPassword(email string) string {
 	return hashedPassword
 }
 
-// Check if a session with the given sessionToken, userID, and deleted value exists in the database.
-func invalidateSession(sessionToken string, userID int) bool {
-	query := "SELECT COUNT(*) FROM login_session WHERE token = ? AND user_id = ? AND deleted = 0"
-	var count int
-	err := db.QueryRow(query, sessionToken, userID).Scan(&count)
-	if err != nil {
-		return false
-	}
-	return count > 0
+// InvalidateSession updates the session to mark it as deleted
+func InvalidateSession(sessionToken string) error {
+	query := "UPDATE login_session SET deleted = 1 WHERE token = ?"
+	_, err := db.Exec(query, sessionToken)
+	return err
 }
 
 func IsSessionDeleted(sessionToken string, userID int) bool {
