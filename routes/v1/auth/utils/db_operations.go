@@ -3,6 +3,7 @@ package auth
 import (
 	"database/sql"
 	"fmt"
+	auth "go-gin-api-boilerplate/routes/v1/auth/schemas"
 	"time"
 
 	"github.com/google/uuid"
@@ -16,7 +17,7 @@ func Initialize(database *sql.DB) {
 }
 
 // InsertUserIntoDB inserts user data into the 'users' table.
-func InsertUserIntoDB(user TblUsers) error {
+func InsertUserIntoDB(user auth.TblUsers) error {
 	_, err := db.Exec("INSERT INTO users (uuid, email, first_name, gender, last_name, middle_name, password, phone, profile_pic) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)",
 		user.UUID, user.Email, user.FirstName, user.Gender, user.LastName, user.MiddleName, user.Password, user.Phone, user.ProfilePic)
 	if err != nil {
@@ -27,7 +28,7 @@ func InsertUserIntoDB(user TblUsers) error {
 }
 
 // Check if the email already exists in the database.
-func emailExists(email string) bool {
+func EmailExists(email string) bool {
 	// Perform a database query to check if the email exists.
 	query := "SELECT COUNT(*) FROM users WHERE email = ?"
 	var count int
@@ -40,7 +41,7 @@ func emailExists(email string) bool {
 }
 
 // Check if the phone number already exists in the database.
-func phoneNumberExists(phone string) bool {
+func PhoneNumberExists(phone string) bool {
 	// Perform a database query to check if the phone number exists.
 	query := "SELECT COUNT(*) FROM users WHERE phone = ?"
 	var count int
@@ -56,7 +57,7 @@ func phoneNumberExists(phone string) bool {
 const TokenExpiryMinutes = 60
 
 // InsertValidateTokenIntoDB inserts a validation token into the database.
-func InsertValidateTokenIntoDB(data TblValidateToken) error {
+func InsertValidateTokenIntoDB(data auth.TblValidateToken) error {
 	// Replace this with your actual database insertion logic.
 	// Assume db is a database connection that you have established.
 
@@ -87,7 +88,7 @@ func InsertValidateToken(userID int, token string, otp string) error {
 	expiryTime := time.Now().Add(time.Minute * time.Duration(TokenExpiryMinutes))
 
 	// Prepare the data for insertion
-	data := TblValidateToken{
+	data := auth.TblValidateToken{
 		UUID:   uuid,
 		UserID: userID,
 		Token:  token,
@@ -105,7 +106,7 @@ func InsertValidateToken(userID int, token string, otp string) error {
 }
 
 // InsertValidateTokenIntoDB inserts a validation token into the database.
-func InsertLoginSessionIntoDB(data TblLoginSession) error {
+func InsertLoginSessionIntoDB(data auth.TblLoginSession) error {
 	// Prepare the SQL query
 	query := `
 		INSERT INTO login_session (uuid, user_id, token, session_expiry_timestamp)
@@ -132,7 +133,7 @@ func InsertLoginSession(userID int, token string) error {
 	expiryTime := time.Now().Add(time.Minute * time.Duration(TokenExpiryMinutes))
 
 	// Prepare the data for insertion
-	data := TblLoginSession{
+	data := auth.TblLoginSession{
 		UUID:                   uuid,
 		UserID:                 userID,
 		Token:                  token,
@@ -148,7 +149,7 @@ func InsertLoginSession(userID int, token string) error {
 }
 
 // Check if a user with the given email exists in the database.
-func checkUser(email string) bool {
+func CheckUser(email string) bool {
 	query := "SELECT COUNT(*) FROM users WHERE email = ?"
 	var count int
 	err := db.QueryRow(query, email).Scan(&count)
@@ -159,7 +160,7 @@ func checkUser(email string) bool {
 }
 
 // Fetch the user's ID by email from the database.
-func getUserIDByEmail(email string) (string, error) {
+func GetUserIDByEmail(email string) (string, error) {
 	var userID string
 	query := "SELECT id FROM users WHERE email = ?"
 	err := db.QueryRow(query, email).Scan(&userID)
@@ -171,7 +172,7 @@ func getUserIDByEmail(email string) (string, error) {
 }
 
 // Fetch the user's hashed password from the database.
-func getUserPassword(email string) string {
+func GetUserPassword(email string) string {
 	var hashedPassword string
 	query := "SELECT password FROM users WHERE email = ?"
 	err := db.QueryRow(query, email).Scan(&hashedPassword)

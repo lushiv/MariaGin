@@ -32,6 +32,6 @@ type ErrorResponse struct {
 	Error string `json:"error"`
 }
 
-type commonResponse struct {
+type CommonResponse struct {
 	Message string `json:"message"`
 }
