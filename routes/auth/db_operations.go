@@ -104,6 +104,49 @@ func InsertValidateToken(userID int, token string, otp string) error {
 	return nil
 }
 
+// InsertValidateTokenIntoDB inserts a validation token into the database.
+func InsertLoginSessionIntoDB(data TblLoginSession) error {
+	// Prepare the SQL query
+	query := `
+		INSERT INTO login_session (uuid, user_id, token, session_expiry_timestamp)
+		VALUES (?, ?, ?, ?)
+	`
+	// Execute the SQL query with the provided data
+	_, err := db.Exec(query,
+		data.UUID, data.UserID, data.Token, data.SessionExpiryTimestamp)
+
+	if err != nil {
+		fmt.Printf("Error inserting user into 'login_session' table: %v", err)
+		return err
+	}
+
+	return nil
+}
+
+// InsertValidateToken inserts a validation token into the database.
+func InsertLoginSession(userID int, token string) error {
+	// Generate a new UUID for the token
+	uuid := uuid.New().String()
+
+	// Calculate the token expiry time (you can customize this as needed)
+	expiryTime := time.Now().Add(time.Minute * time.Duration(TokenExpiryMinutes))
+
+	// Prepare the data for insertion
+	data := TblLoginSession{
+		UUID:                   uuid,
+		UserID:                 userID,
+		Token:                  token,
+		SessionExpiryTimestamp: expiryTime,
+	}
+
+	// Insert the data into the database
+	if err := InsertLoginSessionIntoDB(data); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // Check if a user with the given email exists in the database.
 func checkUser(email string) bool {
 	query := "SELECT COUNT(*) FROM users WHERE email = ?"
@@ -137,4 +180,27 @@ func getUserPassword(email string) string {
 		return ""
 	}
 	return hashedPassword
+}
+
+// Check if a session with the given sessionToken, userID, and deleted value exists in the database.
+func invalidateSession(sessionToken string, userID int) bool {
+	query := "SELECT COUNT(*) FROM login_session WHERE token = ? AND user_id = ? AND deleted = 0"
+	var count int
+	err := db.QueryRow(query, sessionToken, userID).Scan(&count)
+	if err != nil {
+		return false
+	}
+	return count > 0
+}
+
+func IsSessionDeleted(sessionToken string, userID int) bool {
+	query := "SELECT COUNT(*) FROM login_session WHERE token = ? AND user_id = ? AND deleted = 1"
+	fmt.Println(sessionToken, userID)
+	var count int
+	err := db.QueryRow(query, sessionToken, userID).Scan(&count)
+	if err != nil {
+		// Handle the error (e.g., log it or return false).
+		return false
+	}
+	return count > 0
 }

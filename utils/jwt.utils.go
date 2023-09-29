@@ -10,31 +10,30 @@ import (
 
 // GenerateJWTToken generates a JWT token.
 func GenerateJWTToken(userInfo UserInfo) (string, error) {
-	// Get the token secret and other JWT configuration values from environment variables
+	// Get the token secret from environment variables
 	tokenSecret := os.Getenv("TOKEN_SECRET")
-	//jwtHashAlgorithm := os.Getenv("JWT_HASH_ALGORITHM")
-	//jwtIssuer := os.Getenv("JWT_ISSUER")
+	fmt.Println(tokenSecret)
 
 	// Create a new JWT token
 	token := jwt.New(jwt.SigningMethodHS256)
 
 	// Set the claims for the token
 	claims := token.Claims.(jwt.MapClaims)
-	claims["user"] = userInfo.ID
+	claims["user"] = userInfo.ID // Set the user claim to the user ID
 	claims["role"] = userInfo.Role
 	claims["exp"] = time.Now().Add(24 * time.Hour).Unix() // Token expiration time
 
 	// Sign the token with the secret key
 	tokenString, err := token.SignedString([]byte(tokenSecret))
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("Failed to sign token: %v", err)
 	}
 
 	return tokenString, nil
 }
 
 // VerifyToken verifies a JWT token.
-func VerifyToken(tokenString string) (*jwt.Token, error) {
+func VerifyToken(tokenString string) (jwt.MapClaims, error) {
 	// Get the token secret from environment variables
 	tokenSecret := os.Getenv("TOKEN_SECRET")
 
@@ -51,7 +50,18 @@ func VerifyToken(tokenString string) (*jwt.Token, error) {
 		return nil, err
 	}
 
-	return token, nil
+	// Check if the token is valid
+	if !token.Valid {
+		return nil, fmt.Errorf("Invalid token")
+	}
+
+	// Extract claims
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if !ok {
+		return nil, fmt.Errorf("Invalid token claims")
+	}
+
+	return claims, nil
 }
 
 // DecodeJWTToken decodes a JWT token without verifying it.

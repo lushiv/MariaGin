@@ -27,14 +27,14 @@ type TblUsers struct {
 
 // TblLoginSession represents the 'login_session' table.
 type TblLoginSession struct {
-	ID                     int    `json:"id"`
-	UUID                   string `json:"uuid"`
-	Token                  string `json:"token"`
-	UserID                 int    `json:"user_id"`
-	SessionExpiryTimestamp string `json:"session_expiry_timestamp"`
-	CreatedAt              string `json:"created_at"`
-	IP                     string `json:"ip"`
-	Deleted                int    `json:"deleted"`
+	ID                     int       `json:"id"`
+	UUID                   string    `json:"uuid"`
+	Token                  string    `json:"token"`
+	UserID                 int       `json:"user_id"`
+	SessionExpiryTimestamp time.Time `json:"session_expiry_timestamp"`
+	CreatedAt              string    `json:"created_at"`
+	IP                     string    `json:"ip"`
+	Deleted                int       `json:"deleted"`
 }
 
 // TblValidateToken represents the 'validate_token' table.

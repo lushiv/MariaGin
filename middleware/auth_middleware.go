@@ -1,15 +1,14 @@
-// Step 1: Create an authentication middleware in middleware/auth_middleware.go
-
 package middleware
 
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 
-	common_utils "go-gin-api-boilerplate/utils"
+	"go-gin-api-boilerplate/routes/auth"
+	common_utils "go-gin-api-boilerplate/utils" // Import your API package
 
 	"github.com/gin-gonic/gin"
-	"github.com/golang-jwt/jwt"
 )
 
 func AuthMiddleware() gin.HandlerFunc {
@@ -23,29 +22,38 @@ func AuthMiddleware() gin.HandlerFunc {
 		}
 
 		// Verify the JWT token
-		token, err := common_utils.VerifyToken(tokenString)
-		fmt.Println("token:::", token)
-
+		claims, err := common_utils.VerifyToken(tokenString)
 		if err != nil {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
 			c.Abort()
 			return
 		}
 
-		// Extract customer information from the token and set it in the context
-		claims, ok := token.Claims.(jwt.MapClaims)
-		fmt.Println("claims:::", claims)
+		// Access the user claim
+		userID, ok := claims["user"].(string)
 		if !ok {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid user information"})
 			c.Abort()
 			return
 		}
 
-		fmt.Println("kskk")
+		// Convert userID from string to int
+		userIDInt, err := strconv.Atoi(userID)
+		if err != nil {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid user ID"})
+			c.Abort()
+			return
+		}
 
-		// Set "user" and "role" claims in the context
-		c.Set("user", token["user"])
-		c.Set("role", claims["role"])
+		// Check if the session is deleted or expired
+		errCheck := auth.IsSessionDeleted(tokenString, userIDInt)
+		if errCheck {
+			c.JSON(http.StatusConflict, gin.H{"error": "session error "})
+			return
+		}
+		fmt.Print("errCheck")
+
+		c.Set("user", userID) // Set "user" in the context
 		c.Next()
 	}
 }

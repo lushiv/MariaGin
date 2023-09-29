@@ -3,6 +3,7 @@ package auth
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 
 	common_utils "go-gin-api-boilerplate/utils"
 
@@ -149,6 +150,20 @@ func LoginCustomer(c *gin.Context) {
 		return
 	}
 
+	// Convert userID from string to int
+	userIDInt, err := strconv.Atoi(userID)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid user ID"})
+		c.Abort()
+		return
+	}
+
+	// Insert the validation token into the database
+	if err := InsertLoginSession(userIDInt, jwtToken); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to insert login session"})
+		return
+	}
+
 	// Return the JWT token in the response.
 	response := LoginUserResponse{
 		Message: "Customer logged in successfully",
@@ -170,25 +185,31 @@ func LoginCustomer(c *gin.Context) {
 // @Success 200 {object} commonResponse
 // @Router /auth/logout [post]
 func LogoutCustomer(c *gin.Context) {
+	fmt.Println("LogoutCustomer")
 	// Use the AuthMiddleware to verify authentication
-	customerInfo, exists := c.Get("customer")
-	fmt.Println("LogoutCustomer::: ", customerInfo)
+	userID, exists := c.Get("user")
 	if !exists {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
 		return
 	}
 
-	// Extract user information from the customerInfo map
-	userID, ok := customerInfo.(map[string]interface{})["user_id"].(string)
+	// Extract user information from the userID
+	userIDInt, ok := userID.(int)
 	if !ok {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid user information"})
 		return
 	}
 
-	fmt.Println(userID)
+	fmt.Println(userIDInt)
+	// Get the session token from the JWT token
+	sessionToken := c.GetHeader("Authorization")
 
-	// Optionally, perform additional logout tasks (e.g., invalidate the token)
-	// You can implement your own logic here, such as blacklisting the token
+	// Invalidate the session by marking it as deleted in the database
+	err := invalidateSession(sessionToken, userIDInt)
+	if err != false {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to logout"})
+		return
+	}
 
 	// Return a success response
 	c.JSON(http.StatusOK, gin.H{"message": "Customer logged out successfully"})
