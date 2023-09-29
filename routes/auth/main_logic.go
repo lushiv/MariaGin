@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"fmt"
 	"net/http"
 
 	common_utils "go-gin-api-boilerplate/utils"
@@ -162,9 +163,33 @@ func LoginCustomer(c *gin.Context) {
 // @Tags Authentication
 // @Accept json
 // @Produce json
-// @Success 200 {object} RegisterResponse
-// @Router /auth/logout [post]s
+// @Security ApiKeyAuth
+// @In header
+// @Name Authorization
+// @Param Authorization header string true "Authorization token"
+// @Success 200 {object} commonResponse
+// @Router /auth/logout [post]
 func LogoutCustomer(c *gin.Context) {
-	// Implement customer logout logic here (optional)
-	c.JSON(http.StatusOK, commonResponse{"Customer logged out successfully"})
+	// Use the AuthMiddleware to verify authentication
+	customerInfo, exists := c.Get("customer")
+	fmt.Println("LogoutCustomer::: ", customerInfo)
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
+
+	// Extract user information from the customerInfo map
+	userID, ok := customerInfo.(map[string]interface{})["user_id"].(string)
+	if !ok {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid user information"})
+		return
+	}
+
+	fmt.Println(userID)
+
+	// Optionally, perform additional logout tasks (e.g., invalidate the token)
+	// You can implement your own logic here, such as blacklisting the token
+
+	// Return a success response
+	c.JSON(http.StatusOK, gin.H{"message": "Customer logged out successfully"})
 }

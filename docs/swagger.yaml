@@ -51,6 +51,11 @@ definitions:
     - email
     - password
     type: object
+  auth.commonResponse:
+    properties:
+      message:
+        type: string
+    type: object
   restaurants.ErrorResponse:
     properties:
       message:
@@ -112,13 +117,21 @@ paths:
       consumes:
       - application/json
       description: Log out a customer
+      parameters:
+      - description: Authorization token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/auth.RegisterResponse'
+            $ref: '#/definitions/auth.commonResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Log out a customer
       tags:
       - Authentication

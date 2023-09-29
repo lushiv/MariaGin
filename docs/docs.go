@@ -66,6 +66,11 @@ const docTemplate = `{
         },
         "/auth/logout": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Log out a customer",
                 "consumes": [
                     "application/json"
@@ -77,11 +82,20 @@ const docTemplate = `{
                     "Authentication"
                 ],
                 "summary": "Log out a customer",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authorization token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/auth.RegisterResponse"
+                            "$ref": "#/definitions/auth.commonResponse"
                         }
                     }
                 }
@@ -383,6 +397,14 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "profile_pic": {
+                    "type": "string"
+                }
+            }
+        },
+        "auth.commonResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
                     "type": "string"
                 }
             }
