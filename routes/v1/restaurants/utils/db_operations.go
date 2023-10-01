@@ -1,42 +1,22 @@
-// restaurants.go
-
 package restaurants
 
 import (
 	"database/sql"
 	"fmt"
-	"go-gin-api-boilerplate/middleware"
-
-	"github.com/gin-gonic/gin"
+	restaurants_schemas "go-gin-api-boilerplate/routes/v1/restaurants/schemas"
 )
 
 var db *sql.DB
-
-// Restaurant represents a restaurant entity.
-type Restaurant struct {
-	ID       int     `json:"id"`
-	Name     string  `json:"name"`
-	Location string  `json:"location"`
-	Rating   float64 `json:"rating"`
-}
 
 // Initialize sets the database connection.
 func Initialize(database *sql.DB) {
 	db = database
 }
 
-// RegisterRoutes sets up restaurant-related API routes.
-func RegisterRoutes(router *gin.RouterGroup) {
-	router.GET("", middleware.AuthMiddleware(), GetRestaurants)
-	router.POST("", AddRestaurant)
-	router.PUT("/:id", UpdateRestaurant)
-	router.DELETE("/:id", DeleteRestaurant)
-}
-
 // FetchRestaurantsFromDB retrieves a list of restaurants from the database.
-func FetchRestaurantsFromDB() ([]Restaurant, error) {
+func FetchRestaurantsFromDB() ([]restaurants_schemas.TblRestaurant, error) {
 	// Define a slice to store the retrieved restaurants.
-	var restaurants []Restaurant
+	var restaurants []restaurants_schemas.TblRestaurant
 
 	// Query the database to fetch restaurants.
 	rows, err := db.Query("SELECT id, name, location, rating FROM restaurants")
@@ -47,7 +27,7 @@ func FetchRestaurantsFromDB() ([]Restaurant, error) {
 
 	// Iterate through the result set and populate the restaurants slice.
 	for rows.Next() {
-		var restaurant Restaurant
+		var restaurant restaurants_schemas.TblRestaurant
 		err := rows.Scan(&restaurant.ID, &restaurant.Name, &restaurant.Location, &restaurant.Rating)
 		if err != nil {
 			return nil, err
@@ -58,7 +38,7 @@ func FetchRestaurantsFromDB() ([]Restaurant, error) {
 	return restaurants, nil
 }
 
-func InsertRestaurantIntoDB(restaurant Restaurant) error {
+func InsertRestaurantIntoDB(restaurant restaurants_schemas.AddRestaurantRequest) error {
 	_, err := db.Exec("INSERT INTO restaurants (name, location, rating) VALUES (?, ?, ?)",
 		restaurant.Name, restaurant.Location, restaurant.Rating)
 	if err != nil {
@@ -69,7 +49,7 @@ func InsertRestaurantIntoDB(restaurant Restaurant) error {
 }
 
 // UpdateRestaurantInDB updates an existing restaurant in the database.
-func UpdateRestaurantInDB(restaurantID int, updatedRestaurant Restaurant) error {
+func UpdateRestaurantInDB(restaurantID int, updatedRestaurant restaurants_schemas.UpdateRestaurantRequest) error {
 	// Update the restaurant in the database without the 'description' field.
 	_, err := db.Exec("UPDATE restaurants SET name=?, location=?, rating=? WHERE id=?",
 		updatedRestaurant.Name, updatedRestaurant.Location, updatedRestaurant.Rating, restaurantID)

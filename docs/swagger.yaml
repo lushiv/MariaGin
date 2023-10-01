@@ -1,5 +1,10 @@
 basePath: /
 definitions:
+  auth.CommonResponse:
+    properties:
+      message:
+        type: string
+    type: object
   auth.ErrorResponse:
     properties:
       error:
@@ -51,7 +56,16 @@ definitions:
     - email
     - password
     type: object
-  auth.commonResponse:
+  restaurants.AddRestaurantRequest:
+    properties:
+      location:
+        type: string
+      name:
+        type: string
+      rating:
+        type: number
+    type: object
+  restaurants.CommonResponse:
     properties:
       message:
         type: string
@@ -61,10 +75,19 @@ definitions:
       message:
         type: string
     type: object
-  restaurants.Restaurant:
+  restaurants.GetRestaurantsResponse:
     properties:
       id:
         type: integer
+      location:
+        type: string
+      name:
+        type: string
+      rating:
+        type: number
+    type: object
+  restaurants.UpdateRestaurantRequest:
+    properties:
       location:
         type: string
       name:
@@ -129,7 +152,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/auth.commonResponse'
+            $ref: '#/definitions/auth.CommonResponse'
       security:
       - ApiKeyAuth: []
       summary: Log out a customer
@@ -191,7 +214,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/restaurants.Restaurant'
+              $ref: '#/definitions/restaurants.GetRestaurantsResponse'
             type: array
       security:
       - ApiKeyAuth: []
@@ -203,19 +226,19 @@ paths:
       - application/json
       description: Add a new restaurant to the database
       parameters:
-      - description: Restaurant object to add
+      - description: AddRestaurantRequest object to add
         in: body
         name: restaurant
         required: true
         schema:
-          $ref: '#/definitions/restaurants.Restaurant'
+          $ref: '#/definitions/restaurants.AddRestaurantRequest'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/restaurants.Restaurant'
+            $ref: '#/definitions/restaurants.CommonResponse'
         "400":
           description: Bad Request
           schema:
@@ -269,14 +292,14 @@ paths:
         name: restaurant
         required: true
         schema:
-          $ref: '#/definitions/restaurants.Restaurant'
+          $ref: '#/definitions/restaurants.UpdateRestaurantRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/restaurants.Restaurant'
+            $ref: '#/definitions/restaurants.CommonResponse'
         "400":
           description: Bad Request
           schema:

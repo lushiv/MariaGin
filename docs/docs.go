@@ -95,7 +95,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/auth.commonResponse"
+                            "$ref": "#/definitions/auth.CommonResponse"
                         }
                     }
                 }
@@ -192,7 +192,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/restaurants.Restaurant"
+                                "$ref": "#/definitions/restaurants.GetRestaurantsResponse"
                             }
                         }
                     }
@@ -212,12 +212,12 @@ const docTemplate = `{
                 "summary": "Add a new restaurant",
                 "parameters": [
                     {
-                        "description": "Restaurant object to add",
+                        "description": "AddRestaurantRequest object to add",
                         "name": "restaurant",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/restaurants.Restaurant"
+                            "$ref": "#/definitions/restaurants.AddRestaurantRequest"
                         }
                     }
                 ],
@@ -225,7 +225,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/restaurants.Restaurant"
+                            "$ref": "#/definitions/restaurants.CommonResponse"
                         }
                     },
                     "400": {
@@ -270,7 +270,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/restaurants.Restaurant"
+                            "$ref": "#/definitions/restaurants.UpdateRestaurantRequest"
                         }
                     }
                 ],
@@ -278,7 +278,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/restaurants.Restaurant"
+                            "$ref": "#/definitions/restaurants.CommonResponse"
                         }
                     },
                     "400": {
@@ -337,6 +337,14 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "auth.CommonResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
         "auth.ErrorResponse": {
             "type": "object",
             "properties": {
@@ -415,7 +423,21 @@ const docTemplate = `{
                 }
             }
         },
-        "auth.commonResponse": {
+        "restaurants.AddRestaurantRequest": {
+            "type": "object",
+            "properties": {
+                "location": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "rating": {
+                    "type": "number"
+                }
+            }
+        },
+        "restaurants.CommonResponse": {
             "type": "object",
             "properties": {
                 "message": {
@@ -431,12 +453,26 @@ const docTemplate = `{
                 }
             }
         },
-        "restaurants.Restaurant": {
+        "restaurants.GetRestaurantsResponse": {
             "type": "object",
             "properties": {
                 "id": {
                     "type": "integer"
                 },
+                "location": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "rating": {
+                    "type": "number"
+                }
+            }
+        },
+        "restaurants.UpdateRestaurantRequest": {
+            "type": "object",
+            "properties": {
                 "location": {
                     "type": "string"
                 },
