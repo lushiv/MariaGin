@@ -56,6 +56,20 @@ definitions:
     - email
     - password
     type: object
+  communication_management.CommonResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  communication_management.SendEmailTestRequest:
+    properties:
+      message:
+        type: string
+      sendTo:
+        type: string
+      subject:
+        type: string
+    type: object
   restaurants.AddRestaurantRequest:
     properties:
       location:
@@ -180,6 +194,28 @@ paths:
       summary: Register a new customer
       tags:
       - Authentication
+  /communication/send-test-email:
+    post:
+      consumes:
+      - application/json
+      description: Send a test email
+      parameters:
+      - description: Email data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/communication_management.SendEmailTestRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/communication_management.CommonResponse'
+      summary: Send a test email
+      tags:
+      - Communication Management API TEST
   /health-check:
     get:
       consumes:

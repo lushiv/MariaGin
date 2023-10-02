@@ -9,7 +9,8 @@ import (
 	_ "go-gin-api-boilerplate/docs"         // Import generated docs package
 	"go-gin-api-boilerplate/routes/v1/auth" // Import your API package
 	auth_utils "go-gin-api-boilerplate/routes/v1/auth/utils"
-	"go-gin-api-boilerplate/routes/v1/restaurants" // Import your API package
+	"go-gin-api-boilerplate/routes/v1/communication_management" // Import your API package
+	"go-gin-api-boilerplate/routes/v1/restaurants"              // Import your API package
 	restaurants_utils "go-gin-api-boilerplate/routes/v1/restaurants/utils"
 	common_utils "go-gin-api-boilerplate/utils" // Import your database package
 
@@ -67,6 +68,10 @@ func main() {
 	auth_utils.Initialize(database)
 	common_utils.Initialize(database)
 	auth.RegisterRoutes(authRoutes)
+
+	// Create a router group for communication management routes
+	communicationManagementRoutes := r.Group("/communication")
+	communication_management.RegisterRoutes(communicationManagementRoutes)
 
 	// Create a router group for restaurant routes
 	restaurantRoutes := r.Group("/restaurants")

@@ -8,60 +8,35 @@ import (
 	"github.com/sendgrid/sendgrid-go/helpers/mail"
 )
 
-// SendGridMailHelper defines a helper for sending emails using SendGrid.
-type SendGridMailHelper struct{}
+// EmailData represents the data required for sending an email.
+type EmailData struct {
+	To      string `json:"to"`
+	Subject string `json:"subject"`
+	Message string `json:"message"`
+}
 
-// SendMail sends an email using SendGrid.
-func (s *SendGridMailHelper) SendMail(message *MailMessage) (*SendGridMailResponse, error) {
-	// Get the SendGrid API key
-	sendgridAPIKey := os.Getenv("SENDGRID_API_KEY")
+func SendEmailUsingSendGrid(data *EmailData) error {
+	apiKey := os.Getenv("SENDGRID_API_KEY")
+	fmt.Println("SENDGRID_API_KEY:", apiKey)
+	sgClient := sendgrid.NewSendClient(apiKey)
 
-	// Return an error if API key is not set
-	if sendgridAPIKey == "" {
-		return nil, fmt.Errorf("Sendgrid API key not set")
-	}
+	// Log recipient email, subject, and message
+	fmt.Printf("Recipient: %s\nSubject: %s\nMessage: %s\n", data.To, data.Subject, data.Message)
 
-	// Get the SendGrid sender email address
-	sendgridSenderEmail := os.Getenv("SENDGRID_SENDER_EMAIL")
-
-	// Return an error if sender email is not set
-	if sendgridSenderEmail == "" {
-		return nil, fmt.Errorf("Sendgrid sender email address not set")
-	}
-
-	// Create a SendGrid client with the API key
-	client := sendgrid.NewSendClient(sendgridAPIKey)
-
-	// Prepare the email message
-	messageBody := message.Body
-	from := mail.NewEmail("Sender", sendgridSenderEmail)
-	to := mail.NewEmail("Recipient", message.Email)
-	subject := message.Title
-	content := mail.NewContent("text/html", messageBody)
-	email := mail.NewV3MailInit(from, subject, to, content)
+	// Create an email message
+	from := mail.NewEmail("Sender Name", os.Getenv("SENDGRID_SENDER_EMAIL"))
+	to := mail.NewEmail("Recipient Name", data.To)
+	subject := data.Subject
+	plainTextContent := data.Message
+	message := mail.NewSingleEmail(from, subject, to, plainTextContent, "")
 
 	// Send the email
-	response, err := client.Send(email)
+	response, err := sgClient.Send(message)
 	if err != nil {
-		return nil, err
+		fmt.Println("SendGrid Error:", err)
+	} else {
+		fmt.Println("SendGrid Response:", response.StatusCode)
+		return err
 	}
-	fmt.Println("response", response)
-
-	return &SendGridMailResponse{
-		Success: true,
-		Content: "response",
-	}, nil
-}
-
-// MailMessage represents an email message.
-type MailMessage struct {
-	Email string
-	Title string
-	Body  string
-}
-
-// SendGridMailResponse represents a SendGrid email response.
-type SendGridMailResponse struct {
-	Success bool
-	Content string // Add this field if you want to store the content
+	return err
 }

@@ -135,6 +135,40 @@ const docTemplate = `{
                 }
             }
         },
+        "/communication/send-test-email": {
+            "post": {
+                "description": "Send a test email",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Communication Management API TEST"
+                ],
+                "summary": "Send a test email",
+                "parameters": [
+                    {
+                        "description": "Email data",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/communication_management.SendEmailTestRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/communication_management.CommonResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/health-check": {
             "get": {
                 "description": "get the status of server.",
@@ -419,6 +453,28 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "profile_pic": {
+                    "type": "string"
+                }
+            }
+        },
+        "communication_management.CommonResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "communication_management.SendEmailTestRequest": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "sendTo": {
+                    "type": "string"
+                },
+                "subject": {
                     "type": "string"
                 }
             }
