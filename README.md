@@ -2,8 +2,7 @@
 <a href="#"><img width="20%" height="auto" src="https://i.ibb.co/bXhyRw7/Screenshot-from-2023-10-02-17-53-14.png" height="100"/></a>
 ## Swaggerize Go Gin Backend With MariaDB
 MariaGin is your comprehensive starting point for developing robust and feature-rich backend applications with the Go programming language, powered by the Gin web framework. This boilerplate repository comes fully equipped with Swagger documentation and MariaDB MySQL integration, offering a streamlined experience for building scalable and well-documented APIs.
-## Implemented Stacks
-
+## Key Features:
 ![Go](https://img.shields.io/badge/-Go-05122A?style=flat&logo=go)&nbsp;
 ![Gin](https://img.shields.io/badge/-Gin-05122A?style=flat&logo=gin)&nbsp;
 ![MariaDB](https://img.shields.io/badge/-MariaDB-05122A?style=flat&logo=mariadb)&nbsp;
@@ -18,6 +17,17 @@ MariaGin is your comprehensive starting point for developing robust and feature-
 ![MySql](https://img.shields.io/badge/-MySql-05122A?style=flat&logo=MySql)&nbsp;
 ![Redis](https://img.shields.io/badge/-Redis-05122A?style=flat&logo=Redis)&nbsp;
 ![rabbitmq](https://img.shields.io/badge/-rabbitmq-05122A?style=flat&logo=rabbitmq)&nbsp;
+
+- Go Gin Framework: Harness the power of the Gin web framework for rapid development, routing, and middleware handling.
+- Swagger Documentation: Effortlessly create and maintain API documentation with Swagger, enabling developers and consumers to understand your API endpoints intuitively.
+- MariaDB MySQL: Seamlessly integrate the MariaDB MySQL database for efficient data storage and retrieval.
+- Ready-to-Use Templates: Save time with pre-configured templates and essential packages for a fully functional backend.
+- JWT Authentication: Implement secure authentication and authorization with JSON Web Tokens (JWT).
+- Email Services: Utilize SendGrid for email notification and communication.
+- Database Migrations: Simplify database schema management using Liquibase for smooth and controlled migrations.
+- Docker Support: Easily containerize your application with Docker for deployment flexibility.
+- Git Version Control: Manage and collaborate on your project with Git, making it easier to track changes and contributions.
+- Redis and RabbitMQ: Harness the power of Redis and RabbitMQ for caching and messaging needs.
 ##  Local Machine Setup (Linux)
 Follow these steps to set up the project on your local machine:
 - Clone project from `git clone https://github.com/lushiv/go-gin-api-boilerplate.git`
