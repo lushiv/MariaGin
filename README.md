@@ -1,7 +1,7 @@
 
 <a href="#"><img width="20%" height="auto" src="https://i.ibb.co/bXhyRw7/Screenshot-from-2023-10-02-17-53-14.png" height="100"/></a>
 ## Swaggerize Go Gin Backend With MariaDB
-This is a boilerplate base repository for a Gin Golang API with Swagger documentation and MariaDB MySQL, including all the required packages and necessary helpers for a complete backend project using Gin. 
+MariaGin is your comprehensive starting point for developing robust and feature-rich backend applications with the Go programming language, powered by the Gin web framework. This boilerplate repository comes fully equipped with Swagger documentation and MariaDB MySQL integration, offering a streamlined experience for building scalable and well-documented APIs.
 ## Implemented Stacks
 
 ![Go](https://img.shields.io/badge/-Go-05122A?style=flat&logo=go)&nbsp;
