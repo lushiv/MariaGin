@@ -69,6 +69,15 @@ func LoginCustomer(c *gin.Context) {
 		return
 	}
 
+	// Set data in Redis
+	// Set data in Redis
+	err = common_utils.SetKey("loginSession", jwtToken)
+	if err != nil {
+		// Handle the error
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to set data in Redis"})
+		return
+	}
+
 	// Return the JWT token in the response.
 	response := auth_schemas.LoginUserResponse{
 		Message: "Customer logged in successfully",

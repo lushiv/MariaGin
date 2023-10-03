@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -50,6 +51,14 @@ func main() {
 	}
 	defer database.Close() // Close the database connection when the application exits
 	r := gin.Default()
+	fmt.Println("Database connected...")
+
+	err = common_utils.InitializeRedisConnection(os.Getenv("REDIS_HOST"), os.Getenv("REDIS_PASSWORD"), 0)
+	if err != nil {
+		log.Fatalf("Failed to initialize the redis connection: %v", err)
+	}
+	fmt.Println("Redis server connected...")
+	defer common_utils.RedisClient.Close() // Defer closing the Redis connection
 
 	// Read the PORT environment variable or default to 3000
 	port := os.Getenv("PORT")
