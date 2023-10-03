@@ -11,7 +11,7 @@ import (
 
 // @Summary Update a restaurant by ID
 // @Description Update an existing restaurant in the database by its ID
-// @Tags CRUD API Sample: Restaurant
+// @Tags CRUD Examples API
 // @Accept json
 // @Produce json
 // @Param id path int true "Restaurant ID to update"

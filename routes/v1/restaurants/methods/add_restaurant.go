@@ -10,7 +10,7 @@ import (
 
 // @Summary Add a new restaurant
 // @Description Add a new restaurant to the database
-// @Tags CRUD API Sample: Restaurant
+// @Tags CRUD Examples API
 // @Accept json
 // @Produce json
 // @Param restaurant body AddRestaurantRequest true "AddRestaurantRequest object to add"

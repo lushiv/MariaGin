@@ -22,9 +22,9 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-// @title Go Gin API Boilerplate
-// @version 2.0
-// @description This is a sample boilerplate server.
+// @title MariaGin API Docs
+// @version 1.0
+// @description This is a sample docs.
 // @termsOfService http://swagger.io/terms/
 
 // @contact.name API Support
@@ -70,7 +70,7 @@ func main() {
 	r.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	// HealthCheck route
-	r.GET("/health-check", HealthCheck)
+	r.GET("/abcd/health-check", HealthCheck)
 
 	// Create a router group for auth routes
 	authRoutes := r.Group("/auth")
@@ -97,7 +97,7 @@ func main() {
 // @Accept */*
 // @Produce json
 // @Success 200 {object} map[string]interface{}
-// @Router /health-check [get]
+// @Router /abcd/health-check [get]
 func HealthCheck(c *gin.Context) {
 	res := map[string]interface{}{
 		"data": "Server is up and running",

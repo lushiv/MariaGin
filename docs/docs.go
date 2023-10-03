@@ -24,6 +24,30 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/abcd/health-check": {
+            "get": {
+                "description": "get the status of server.",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Health Check"
+                ],
+                "summary": "HealthCheck",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
         "/auth/login": {
             "post": {
                 "description": "Log in a customer and generate a JWT token",
@@ -169,30 +193,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/health-check": {
-            "get": {
-                "description": "get the status of server.",
-                "consumes": [
-                    "*/*"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Health Check"
-                ],
-                "summary": "HealthCheck",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    }
-                }
-            }
-        },
         "/restaurants": {
             "get": {
                 "security": [
@@ -208,7 +208,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "CRUD API Sample: Restaurant"
+                    "CRUD Examples API"
                 ],
                 "summary": "Get a list of restaurants",
                 "parameters": [
@@ -241,7 +241,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "CRUD API Sample: Restaurant"
+                    "CRUD Examples API"
                 ],
                 "summary": "Add a new restaurant",
                 "parameters": [
@@ -287,7 +287,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "CRUD API Sample: Restaurant"
+                    "CRUD Examples API"
                 ],
                 "summary": "Update a restaurant by ID",
                 "parameters": [
@@ -338,7 +338,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "CRUD API Sample: Restaurant"
+                    "CRUD Examples API"
                 ],
                 "summary": "Delete a restaurant by ID",
                 "parameters": [
@@ -545,12 +545,12 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "2.0",
+	Version:          "1.0",
 	Host:             "localhost:3000",
 	BasePath:         "/",
 	Schemes:          []string{"http"},
-	Title:            "Go Gin API Boilerplate",
-	Description:      "This is a sample boilerplate server.",
+	Title:            "MariaGin API Docs",
+	Description:      "This is a sample docs.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

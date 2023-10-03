@@ -115,14 +115,30 @@ info:
     email: support@swagger.io
     name: API Support
     url: http://www.swagger.io/support
-  description: This is a sample boilerplate server.
+  description: This is a sample docs.
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   termsOfService: http://swagger.io/terms/
-  title: Go Gin API Boilerplate
-  version: "2.0"
+  title: MariaGin API Docs
+  version: "1.0"
 paths:
+  /abcd/health-check:
+    get:
+      consumes:
+      - '*/*'
+      description: get the status of server.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: HealthCheck
+      tags:
+      - Health Check
   /auth/login:
     post:
       consumes:
@@ -216,22 +232,6 @@ paths:
       summary: Send a test email
       tags:
       - Communication Management API TEST
-  /health-check:
-    get:
-      consumes:
-      - '*/*'
-      description: get the status of server.
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            additionalProperties: true
-            type: object
-      summary: HealthCheck
-      tags:
-      - Health Check
   /restaurants:
     get:
       consumes:
@@ -256,7 +256,7 @@ paths:
       - ApiKeyAuth: []
       summary: Get a list of restaurants
       tags:
-      - 'CRUD API Sample: Restaurant'
+      - CRUD Examples API
     post:
       consumes:
       - application/json
@@ -285,7 +285,7 @@ paths:
             $ref: '#/definitions/restaurants.ErrorResponse'
       summary: Add a new restaurant
       tags:
-      - 'CRUD API Sample: Restaurant'
+      - CRUD Examples API
   /restaurants/{id}:
     delete:
       consumes:
@@ -312,7 +312,7 @@ paths:
             $ref: '#/definitions/restaurants.ErrorResponse'
       summary: Delete a restaurant by ID
       tags:
-      - 'CRUD API Sample: Restaurant'
+      - CRUD Examples API
     put:
       consumes:
       - application/json
@@ -346,7 +346,7 @@ paths:
             $ref: '#/definitions/restaurants.ErrorResponse'
       summary: Update a restaurant by ID
       tags:
-      - 'CRUD API Sample: Restaurant'
+      - CRUD Examples API
 schemes:
 - http
 swagger: "2.0"

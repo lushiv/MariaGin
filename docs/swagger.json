@@ -4,8 +4,8 @@
     ],
     "swagger": "2.0",
     "info": {
-        "description": "This is a sample boilerplate server.",
-        "title": "Go Gin API Boilerplate",
+        "description": "This is a sample docs.",
+        "title": "MariaGin API Docs",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
             "name": "API Support",
@@ -16,11 +16,35 @@
             "name": "Apache 2.0",
             "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
         },
-        "version": "2.0"
+        "version": "1.0"
     },
     "host": "localhost:3000",
     "basePath": "/",
     "paths": {
+        "/abcd/health-check": {
+            "get": {
+                "description": "get the status of server.",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Health Check"
+                ],
+                "summary": "HealthCheck",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
         "/auth/login": {
             "post": {
                 "description": "Log in a customer and generate a JWT token",
@@ -166,30 +190,6 @@
                 }
             }
         },
-        "/health-check": {
-            "get": {
-                "description": "get the status of server.",
-                "consumes": [
-                    "*/*"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Health Check"
-                ],
-                "summary": "HealthCheck",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    }
-                }
-            }
-        },
         "/restaurants": {
             "get": {
                 "security": [
@@ -205,7 +205,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "CRUD API Sample: Restaurant"
+                    "CRUD Examples API"
                 ],
                 "summary": "Get a list of restaurants",
                 "parameters": [
@@ -238,7 +238,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "CRUD API Sample: Restaurant"
+                    "CRUD Examples API"
                 ],
                 "summary": "Add a new restaurant",
                 "parameters": [
@@ -284,7 +284,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "CRUD API Sample: Restaurant"
+                    "CRUD Examples API"
                 ],
                 "summary": "Update a restaurant by ID",
                 "parameters": [
@@ -335,7 +335,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "CRUD API Sample: Restaurant"
+                    "CRUD Examples API"
                 ],
                 "summary": "Delete a restaurant by ID",
                 "parameters": [

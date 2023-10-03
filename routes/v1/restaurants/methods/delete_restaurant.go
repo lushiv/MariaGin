@@ -10,7 +10,7 @@ import (
 
 // @Summary Delete a restaurant by ID
 // @Description Delete a restaurant from the database by its ID
-// @Tags CRUD API Sample: Restaurant
+// @Tags CRUD Examples API
 // @Accept json
 // @Produce json
 // @Param id path int true "Restaurant ID to delete"

@@ -9,7 +9,7 @@ import (
 
 // @Summary Get a list of restaurants
 // @Description Get a list of all restaurants
-// @Tags CRUD API Sample: Restaurant
+// @Tags CRUD Examples API
 // @Accept json
 // @Produce json
 // @Security ApiKeyAuth
