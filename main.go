@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"go-gin-api-boilerplate/db"             // Import your database package
 	_ "go-gin-api-boilerplate/docs"         // Import generated docs package
@@ -90,6 +91,24 @@ func main() {
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 	gin.SetMode(gin.ReleaseMode)
+	currentTime := time.Now().Format(time.RFC3339)
+	log.Println(".-..-.")
+	log.Println(" info:")
+	log.Println(" info:    MariaGin              <|    .-..-.")
+	log.Println(" info:    v1.0.1              |\\")
+	log.Println(" info:                       /|.\\")
+	log.Println(" info:                      / || \\")
+	log.Println(" info:                    ,'  |'  \\")
+	log.Println(" info:                 .-'.-==|/_--'")
+	log.Println(" info:                 `--'-------'")
+	log.Println(" info:    __---___--___---___--___---___--___")
+	log.Println(" info:  ____---___--___---___--___---___--___-__")
+	log.Println("info: Server path is in `/home/programmer-0`")
+	log.Println("info: To shut down MariaGin, press <CTRL> + C at any time.")
+	log.Println(" info: Read more at https://MariaGin.com/support.")
+	log.Println("Time ::::::> ", currentTime)
+	log.Println("Server is running on ::::::> ", port)
+	log.Println("Final API docs are running on ::::::> http://localhost:3000/docs/index.html#")
 
 	r.Run(":" + port)
 }
