@@ -102,14 +102,15 @@ func main() {
 	log.Println(" info:                 .-'.-==|/_--'")
 	log.Println(" info:                 `--'-------'")
 	log.Println(" info:    __---___--___---___--___---___--___")
-	log.Println(" info:  ____---___--___---___--___---___--___-__")
+	log.Println(" info:  ______---___--___---___--___---___--___-____")
 	log.Println("info: Server path is in `/home/programmer-0`")
 	log.Println("info: To shut down MariaGin, press <CTRL> + C at any time.")
 	log.Println(" info: Read more at https://MariaGin.com/support.")
+	log.Println("                                                     ")
+	log.Println("-------------------------------------------------------")
 	log.Println("Time ::::::> ", currentTime)
 	log.Println("Server is running on ::::::> ", port)
 	log.Println("Final API docs are running on ::::::> http://localhost:3000/docs/index.html#")
-
 	r.Run(":" + port)
 }
 
