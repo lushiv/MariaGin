@@ -86,6 +86,10 @@ func main() {
 	restaurantRoutes := r.Group("/restaurants")
 	restaurants_utils.Initialize(database)
 	restaurants.RegisterRoutes(restaurantRoutes)
+	// Attach Logger and Recovery middleware
+	r.Use(gin.Logger())
+	r.Use(gin.Recovery())
+	gin.SetMode(gin.ReleaseMode)
 
 	r.Run(":" + port)
 }
