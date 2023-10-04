@@ -6,17 +6,17 @@ MariaGin is your comprehensive starting point for developing robust and feature-
 ![Go](https://img.shields.io/badge/-Go-05122A?style=flat&logo=go)&nbsp;
 ![Gin](https://img.shields.io/badge/-Gin-05122A?style=flat&logo=gin)&nbsp;
 ![MariaDB](https://img.shields.io/badge/-MariaDB-05122A?style=flat&logo=mariadb)&nbsp;
-![JWT](https://img.shields.io/badge/-JWT-05122A?style=flat&logo=jwt)&nbsp;
-![SendGrid](https://img.shields.io/badge/-SendGrid-05122A?style=flat&logo=sendgrid)&nbsp;
 ![Swagger](https://img.shields.io/badge/-Swagger-05122A?style=flat&logo=swagger)&nbsp;
-![Git](https://img.shields.io/badge/-Git-05122A?style=flat&logo=git)&nbsp;
+![JWT](https://img.shields.io/badge/-JWT-05122A?style=flat&logo=jwt)&nbsp;
+![Redis](https://img.shields.io/badge/-Redis-05122A?style=flat&logo=Redis)&nbsp;
 ![Liquibase](https://img.shields.io/badge/-Liquibase-05122A?style=flat&logo=liquibase)&nbsp;
+![rabbitmq](https://img.shields.io/badge/-RabbitMq-05122A?style=flat&logo=rabbitmq)&nbsp;
+![SendGrid](https://img.shields.io/badge/-SendGrid-05122A?style=flat&logo=e)&nbsp;
+![Firebase](https://img.shields.io/badge/-Firebase-05122A?style=flat&logo=firebase)&nbsp;
+![AWS_S3](https://img.shields.io/badge/-AWS_S3-05122A?style=flat&logo=AmazonS3)&nbsp;
 ![Docker](https://img.shields.io/badge/-Docker-05122A?style=flat&logo=docker)&nbsp;
 ![Script](https://img.shields.io/badge/-Script.sh-05122A?style=flat&logo=gnu-bash)&nbsp;
-![GitHub](https://img.shields.io/badge/-GitHub-05122A?style=flat&logo=github)&nbsp;
-![MySql](https://img.shields.io/badge/-MySql-05122A?style=flat&logo=MySql)&nbsp;
-![Redis](https://img.shields.io/badge/-Redis-05122A?style=flat&logo=Redis)&nbsp;
-![rabbitmq](https://img.shields.io/badge/-rabbitmq-05122A?style=flat&logo=rabbitmq)&nbsp;
+
 
 - Go Gin Framework: Harness the power of the Gin web framework for rapid development, routing, and middleware handling.
 - Swagger Documentation: Effortlessly create and maintain API documentation with Swagger, enabling developers and consumers to understand your API endpoints intuitively.
