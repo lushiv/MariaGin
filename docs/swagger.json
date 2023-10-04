@@ -21,7 +21,7 @@
     "host": "localhost:3000",
     "basePath": "/",
     "paths": {
-        "/abcd/health-check": {
+        "/api/health-check": {
             "get": {
                 "description": "get the status of server.",
                 "consumes": [

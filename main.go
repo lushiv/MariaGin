@@ -79,7 +79,7 @@ func main() {
 	// Swagger documentation setup
 	r.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	// HealthCheck route
-	r.GET("/abcd/health-check", v1_routes.HealthCheck)
+	r.GET("/api/health-check", v1_routes.HealthCheck)
 	// Create a router group for v1 routes
 	v1Routes := r.Group("/api/v1/")
 	v1_routes.SetupV1Routes(v1Routes, database)

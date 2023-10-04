@@ -133,7 +133,7 @@ info:
   title: MariaGin API Docs
   version: "1.0"
 paths:
-  /abcd/health-check:
+  /api/health-check:
     get:
       consumes:
       - '*/*'

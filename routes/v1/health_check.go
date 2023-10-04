@@ -14,7 +14,7 @@ import (
 // @Accept */*
 // @Produce json
 // @Success 200 {object} map[string]interface{}
-// @Router /abcd/health-check [get]
+// @Router /api/health-check [get]
 func HealthCheck(c *gin.Context) {
 	res := map[string]interface{}{
 		"data": "Server is up and running",
