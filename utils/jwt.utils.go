@@ -12,7 +12,6 @@ import (
 func GenerateJWTToken(userInfo UserInfo) (string, error) {
 	// Get the token secret from environment variables
 	tokenSecret := os.Getenv("TOKEN_SECRET")
-	fmt.Println(tokenSecret)
 
 	// Create a new JWT token
 	token := jwt.New(jwt.SigningMethodHS256)

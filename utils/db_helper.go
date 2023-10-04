@@ -14,7 +14,6 @@ func Initialize(database *sql.DB) {
 
 func IsSessionDeleted(sessionToken string, userID int) bool {
 	query := "SELECT COUNT(*) FROM login_session WHERE token = ? AND user_id = ? AND deleted = 1"
-	fmt.Println(sessionToken, userID)
 	var count int
 	err := db.QueryRow(query, sessionToken, userID).Scan(&count)
 	if err != nil {

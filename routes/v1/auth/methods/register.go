@@ -2,6 +2,7 @@ package auth
 
 import (
 	"net/http"
+	"os"
 
 	auth_schemas "go-gin-api-boilerplate/routes/v1/auth/schemas"
 	auth_utils "go-gin-api-boilerplate/routes/v1/auth/utils"
@@ -85,7 +86,7 @@ func RegisterUser(c *gin.Context) {
 	}
 
 	// Generate an OTP (replace 'yourSecretOTP' with your actual OTP secret).
-	otpCode, err := common_utils.GenerateOTP("JBSWY3DPEHPK3PXP")
+	otpCode, err := common_utils.GenerateOTP(os.Getenv("SECRET"))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate OTP"})
 		return
