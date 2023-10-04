@@ -3,17 +3,14 @@ package main
 import (
 	"fmt"
 	"log"
-	"net/http"
 	"os"
 	"time"
 
-	"go-gin-api-boilerplate/db"             // Import your database package
-	_ "go-gin-api-boilerplate/docs"         // Import generated docs package
-	"go-gin-api-boilerplate/routes/v1/auth" // Import your API package
-	auth_utils "go-gin-api-boilerplate/routes/v1/auth/utils"
-	"go-gin-api-boilerplate/routes/v1/communication_management" // Import your API package
-	"go-gin-api-boilerplate/routes/v1/restaurants"              // Import your API package
-	restaurants_utils "go-gin-api-boilerplate/routes/v1/restaurants/utils"
+	"go-gin-api-boilerplate/db"                  // Import your database package
+	_ "go-gin-api-boilerplate/docs"              // Import generated docs package
+	v1_routes "go-gin-api-boilerplate/routes/v1" // Import your API package
+
+	// Import your API package
 	common_utils "go-gin-api-boilerplate/utils" // Import your database package
 
 	// Import your API package
@@ -81,62 +78,25 @@ func main() {
 
 	// Swagger documentation setup
 	r.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-
 	// HealthCheck route
-	r.GET("/abcd/health-check", HealthCheck)
+	r.GET("/abcd/health-check", v1_routes.HealthCheck)
+	// Create a router group for v1 routes
+	v1Routes := r.Group("/api/v1/")
+	v1_routes.SetupV1Routes(v1Routes, database)
 
-	// Create a router group for auth routes
-	authRoutes := r.Group("/auth")
-	auth_utils.Initialize(database)
-	common_utils.Initialize(database)
-	auth.RegisterRoutes(authRoutes)
-
-	// Create a router group for communication management routes
-	communicationManagementRoutes := r.Group("/communication")
-	communication_management.RegisterRoutes(communicationManagementRoutes)
-
-	// Create a router group for restaurant routes
-	restaurantRoutes := r.Group("/restaurants")
-	restaurants_utils.Initialize(database)
-	restaurants.RegisterRoutes(restaurantRoutes)
 	// Attach Logger and Recovery middleware
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 	gin.SetMode(gin.ReleaseMode)
+
 	currentTime := time.Now().Format(time.RFC3339)
-	log.Println(".-..-.")
-	log.Println(" info:")
-	log.Println(" info:    MariaGin              <|    .-..-.")
-	log.Println(" info:    v1.0.1              |\\")
-	log.Println(" info:                       /|.\\")
-	log.Println(" info:                      / || \\")
-	log.Println(" info:                    ,'  |'  \\")
-	log.Println(" info:                 .-'.-==|/_--'")
-	log.Println(" info:                 `--'-------'")
-	log.Println(" info:    __---___--___---___--___---___--___")
-	log.Println(" info:  ______---___--___---___--___---___--___-____")
-	log.Println("info: Server path is in `/home/programmer-0`")
-	log.Println("info: To shut down MariaGin, press <CTRL> + C at any time.")
-	log.Println(" info: Read more at https://MariaGin.com/support.")
-	log.Println("                                                     ")
-	log.Println("-------------------------------------------------------")
+	fmt.Println("                                                      ")
+	log.Println("To shut down MariaGin, press <CTRL> + C at any time.")
+	log.Println("Read more at https://github.com/lushiv/MariaGin.")
+	log.Println("                 MariaGin                                 ")
+	log.Println("---------------   v1.0.1   -----------------------------")
 	log.Println("Time ::::::> ", currentTime)
 	log.Println("Server is running on ::::::> ", port)
 	log.Println("Final API docs are running on ::::::> http://localhost:3000/docs/index.html#")
 	r.Run(":" + port)
-}
-
-// HealthCheck godoc
-// @Summary HealthCheck
-// @Description get the status of server.
-// @Tags Health Check
-// @Accept */*
-// @Produce json
-// @Success 200 {object} map[string]interface{}
-// @Router /abcd/health-check [get]
-func HealthCheck(c *gin.Context) {
-	res := map[string]interface{}{
-		"data": "Server is up and running",
-	}
-	c.JSON(http.StatusOK, res)
 }

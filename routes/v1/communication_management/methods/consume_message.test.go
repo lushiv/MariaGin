@@ -14,7 +14,7 @@ import (
 // @Produce json
 // @Success 200 {object} CommonResponse
 // @Failure 500 {object} ErrorResponse
-// @Router /communication/consume-message-test [get]
+// @Router /api/v1/communication/consume-message-test [get]
 func ConsumeMessageTest(c *gin.Context) {
 	// Specify the queue name to consume from
 	queueName := "TEST_JANAK" // Replace with your queue name

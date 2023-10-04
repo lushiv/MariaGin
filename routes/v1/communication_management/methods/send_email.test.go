@@ -16,7 +16,7 @@ import (
 // @Produce json
 // @Param request body SendEmailTestRequest true "Email data"
 // @Success 200 {object} CommonResponse
-// @Router /communication/send-test-email [post]
+// @Router /api/v1/communication/send-test-email [post]
 func SendEmailTest(c *gin.Context) {
 	var request communication_management_schemas.SendEmailTestRequest
 

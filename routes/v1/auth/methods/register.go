@@ -18,7 +18,7 @@ import (
 // @Produce json
 // @Param registerRequest body RegisterUserReq true "Registration request"
 // @Success 200 {object} RegisterResponse
-// @Router /auth/register [post]
+// @Router /api/v1/auth/register [post]
 // RegisterUser handles user registration.
 func RegisterUser(c *gin.Context) {
 	var req auth_schemas.RegisterUserReq

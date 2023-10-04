@@ -48,7 +48,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/auth/login": {
+        "/api/v1/auth/login": {
             "post": {
                 "description": "Log in a customer and generate a JWT token",
                 "consumes": [
@@ -88,7 +88,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/auth/logout": {
+        "/api/v1/auth/logout": {
             "post": {
                 "security": [
                     {
@@ -125,7 +125,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/auth/register": {
+        "/api/v1/auth/register": {
             "post": {
                 "description": "Register a new customer and generate a JWT token",
                 "consumes": [
@@ -159,7 +159,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/communication/consume-message-test": {
+        "/api/v1/communication/consume-message-test": {
             "get": {
                 "description": "Consume a message from a RabbitMQ queue",
                 "consumes": [
@@ -188,7 +188,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/communication/publish-message-test": {
+        "/api/v1/communication/publish-message-test": {
             "post": {
                 "description": "Publish a message to RabbitMQ queue",
                 "consumes": [
@@ -234,7 +234,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/communication/send-test-email": {
+        "/api/v1/communication/send-test-email": {
             "post": {
                 "description": "Send a test email",
                 "consumes": [
@@ -268,7 +268,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/restaurants": {
+        "/api/v1/restaurants": {
             "get": {
                 "security": [
                     {
@@ -352,7 +352,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/restaurants/{id}": {
+        "/api/v1/restaurants/{id}": {
             "put": {
                 "description": "Update an existing restaurant in the database by its ID",
                 "consumes": [

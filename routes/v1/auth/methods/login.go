@@ -19,7 +19,7 @@ import (
 // @Param LoginUserReq body LoginUserReq true "Login request"
 // @Success 200 {object} LoginUserResponse
 // @Failure 401 {object} ErrorResponse
-// @Router /auth/login [post]
+// @Router /api/v1/auth/login [post]
 func LoginCustomer(c *gin.Context) {
 	var req auth_schemas.LoginUserReq
 

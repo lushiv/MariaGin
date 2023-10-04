@@ -16,7 +16,7 @@ import (
 // @Success 200 {object} CommonResponse
 // @Failure 400 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
-// @Router /communication/publish-message-test [post]
+// @Router /api/v1/communication/publish-message-test [post]
 func PublishMessageTest(c *gin.Context) {
 	// Parse the request body to get the message
 	var PublishRequest struct {

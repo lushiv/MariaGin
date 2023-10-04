@@ -17,7 +17,7 @@ import (
 // @Success 201 {object} CommonResponse
 // @Failure 400 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
-// @Router /restaurants [post]
+// @Router /api/v1/restaurants [post]
 func AddRestaurant(c *gin.Context) {
 	// Bind the request body to a Restaurant struct.
 	var restaurant restaurants_schemas.AddRestaurantRequest

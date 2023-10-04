@@ -17,7 +17,7 @@ import (
 // @Name Authorization
 // @Param Authorization header string true "Authorization token"
 // @Success 200 {array} GetRestaurantsResponse
-// @Router /restaurants [get]
+// @Router /api/v1/restaurants [get]
 func GetRestaurants(c *gin.Context) {
 	// Fetch and return a list of restaurants from the database.
 	restaurants, err := restaurants_utils.FetchRestaurantsFromDB()

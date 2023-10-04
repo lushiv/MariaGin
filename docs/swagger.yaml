@@ -149,7 +149,7 @@ paths:
       summary: HealthCheck
       tags:
       - Health Check
-  /auth/login:
+  /api/v1/auth/login:
     post:
       consumes:
       - application/json
@@ -175,7 +175,7 @@ paths:
       summary: Log in a customer
       tags:
       - Authentication
-  /auth/logout:
+  /api/v1/auth/logout:
     post:
       consumes:
       - application/json
@@ -198,7 +198,7 @@ paths:
       summary: Log out a customer
       tags:
       - Authentication
-  /auth/register:
+  /api/v1/auth/register:
     post:
       consumes:
       - application/json
@@ -220,7 +220,7 @@ paths:
       summary: Register a new customer
       tags:
       - Authentication
-  /communication/consume-message-test:
+  /api/v1/communication/consume-message-test:
     get:
       consumes:
       - application/json
@@ -239,7 +239,7 @@ paths:
       summary: Consume a message from RabbitMQ
       tags:
       - Communication Management API TEST
-  /communication/publish-message-test:
+  /api/v1/communication/publish-message-test:
     post:
       consumes:
       - application/json
@@ -269,7 +269,7 @@ paths:
       summary: Publish a message to RabbitMQ
       tags:
       - Communication Management API TEST
-  /communication/send-test-email:
+  /api/v1/communication/send-test-email:
     post:
       consumes:
       - application/json
@@ -291,7 +291,7 @@ paths:
       summary: Send a test email
       tags:
       - Communication Management API TEST
-  /restaurants:
+  /api/v1/restaurants:
     get:
       consumes:
       - application/json
@@ -345,7 +345,7 @@ paths:
       summary: Add a new restaurant
       tags:
       - CRUD Examples API
-  /restaurants/{id}:
+  /api/v1/restaurants/{id}:
     delete:
       consumes:
       - application/json

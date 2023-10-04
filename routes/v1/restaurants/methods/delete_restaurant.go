@@ -17,7 +17,7 @@ import (
 // @Success 204 "No Content"
 // @Failure 400 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
-// @Router /restaurants/{id} [delete]
+// @Router /api/v1/restaurants/{id} [delete]
 func DeleteRestaurant(c *gin.Context) {
 	// Extract the restaurant ID from the URL parameter.
 	restaurantID, err := strconv.Atoi(c.Param("id"))

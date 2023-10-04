@@ -19,7 +19,7 @@ import (
 // @Success 200 {object} CommonResponse
 // @Failure 400 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
-// @Router /restaurants/{id} [put]
+// @Router /api/v1/restaurants/{id} [put]
 func UpdateRestaurant(c *gin.Context) {
 	// Extract the restaurant ID from the URL parameter.
 	restaurantID, err := strconv.Atoi(c.Param("id"))

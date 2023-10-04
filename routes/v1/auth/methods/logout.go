@@ -18,7 +18,7 @@ import (
 // @Name Authorization
 // @Param Authorization header string true "Authorization token"
 // @Success 200 {object} CommonResponse
-// @Router /auth/logout [post]
+// @Router /api/v1/auth/logout [post]
 func LogoutCustomer(c *gin.Context) {
 	userID, exists := c.Get("user")
 	if !exists {
