@@ -61,6 +61,18 @@ func main() {
 	fmt.Println("Redis server connected...")
 	defer common_utils.RedisClient.Close() // Defer closing the Redis connection
 
+	// Initialize RabbitMQ connection
+	rabbitMQURI := os.Getenv("RABBITMQ_URI")
+	if rabbitMQURI == "" {
+		log.Fatal("RABBITMQ_URI environment variable not set")
+	}
+	err = common_utils.InitializeRabbitMQConnection(rabbitMQURI)
+	if err != nil {
+		log.Fatalf("Failed to initialize the RabbitMQ connection: %v", err)
+	}
+	defer common_utils.CloseRabbitMQConnection() // Defer closing the RabbitMQ connection
+	fmt.Println("RabbitMQ connected...")
+
 	// Read the PORT environment variable or default to 3000
 	port := os.Getenv("PORT")
 	if port == "" {
