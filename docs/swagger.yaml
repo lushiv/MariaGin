@@ -80,6 +80,11 @@ definitions:
       subject:
         type: string
     type: object
+  file_uploads.SendImageResponse:
+    properties:
+      url:
+        type: string
+    type: object
   restaurants.AddRestaurantRequest:
     properties:
       location:
@@ -291,6 +296,32 @@ paths:
       summary: Send a test email
       tags:
       - Communication Management API TEST
+  /api/v1/files/upload-image:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Upload an image to either AWS S3 or Firebase Storage
+      parameters:
+      - description: Storage Type ('aws' or 'firebase')
+        in: formData
+        name: storageType
+        required: true
+        type: string
+      - description: Image File
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/file_uploads.SendImageResponse'
+      summary: Upload an image
+      tags:
+      - Image Upload
   /api/v1/restaurants:
     get:
       consumes:

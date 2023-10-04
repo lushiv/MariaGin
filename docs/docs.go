@@ -268,6 +268,45 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/files/upload-image": {
+            "post": {
+                "description": "Upload an image to either AWS S3 or Firebase Storage",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Image Upload"
+                ],
+                "summary": "Upload an image",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Storage Type ('aws' or 'firebase')",
+                        "name": "storageType",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "Image File",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/file_uploads.SendImageResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/restaurants": {
             "get": {
                 "security": [
@@ -566,6 +605,14 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "subject": {
+                    "type": "string"
+                }
+            }
+        },
+        "file_uploads.SendImageResponse": {
+            "type": "object",
+            "properties": {
+                "url": {
                     "type": "string"
                 }
             }

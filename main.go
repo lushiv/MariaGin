@@ -37,7 +37,7 @@ import (
 // @schemes http
 
 func main() {
-	port := os.Getenv("PORT")
+
 	// Load environment variables from .env file
 	if err := godotenv.Load(); err != nil {
 		log.Fatal("Error loading .env file")
@@ -71,6 +71,20 @@ func main() {
 	}
 	defer common_utils.CloseRabbitMQConnection() // Defer closing the RabbitMQ connection
 	fmt.Println("RabbitMQ connected...")
+
+	// Load environment variables from .env file
+	if err := godotenv.Load(); err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	// Initialize Firebase
+	if err := common_utils.InitializeFirebaseApp("configs/firebase-admin-sdk.json"); err != nil {
+		log.Fatalf("Failed to initialize Firebase: %v", err)
+	}
+
+	fmt.Println("Firebase connected...")
+
+	port := os.Getenv("PORT")
 
 	// Swagger documentation setup
 	r.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

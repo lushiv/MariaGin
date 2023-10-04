@@ -1,0 +1,13 @@
+{
+    "type": "service_account",
+    "project_id": "eco-friendly-tourism",
+    "private_key_id": "039c41150b2a025b6ae07eec3b4634d9006702a7",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCp/serAgyDmzqS\noKZSfYPAHItdQX7YaAYNL5Jkh1kmh18rfX5tTtVhbVxD6VJRqF9Uu9PIlt2j4YLs\nWlkjU1PKsq4CMB5SfEicnFgy4oKm0kjhANEhn5cpc1Ue8za0vY4FDMHujZCvMwjl\nYXx67JXKTXkWWIDFPDnsDjSBUCGp/35sAcZVAnx1h5roDEki5VaTkvlE51XyFObW\ncINBwVoRF5tnNMzX0KJKXZpSHFu5m5ZgfN8IPWFlog+E+NQM7m37l8qrfd+7uMM+\nXvKXAyPfuPEd4XE4bVDiCMi5/i/faYI21H4YkDpagBD1WEW4XEQq24RfZiwM944o\ntdIrb5m9AgMBAAECggEABINaMeNbvLGGBEPvY0V0yXvLt8qYDDVayV/UpZ/+qtCx\nb9PX/VC4YB4WP7FPX6tpXudrqUNXSzuewH9qwJujBlpPComhGUFQCWRdmeA8mSKZ\n3IT4If0WkMgNX8VHBwf43/ZyPmiT794AsI8X56JY6bMiPoi6YA7uXlXhAl8QiohN\n8eulLi7KjDbrpGPLWlcp/BNO42YtZcF7eVEVv/W8g0ZCVKTRQH7RGIuvNwAg+5TB\nGJxCqD6QFjFtMSKtN8edCfcVnjAm8wlzrfll/Ux5rmYZmKH7mmB2WWnKsT7qi3TV\nGP2gdurdn3azA4ug33YYhQ3vfkyd6LJ79vssM/PlgQKBgQDXY3Q9TH6IlpV8fstR\n/om6PkyTstBtkJRFTNY+ES/HgkQKljJzZtUnYnIHGNXZVbd2bfIEHWzWlUs+f7Lx\n7/FJnJtwZ9ihG7f95NN/sMm5mHleROGUjQUpPAhXtL3MOVoSXBz2SNS/rtEKkOc6\n54iUJyU2K/CTRSTKQiEulfavwQKBgQDKDD9VPNc9vxiDPb2Y2lTxF3q5KCwQ9K85\naQhzJedEkygFNuSdMfCMnJ6V0MYXq/tU0XVKOV3y8pralweIy0e8mZYNXGIdvfHd\nG7UI1Id1XIMYNLYzdKX6JKoDfN71OlxlLwWIhqGbX9jb1ZjH2yzTHQ4q2qWxqLSM\noJF+Hp3o/QKBgHZUwFaxAM8/k47bBg7c/YOhmGaIlbOr+5l7FjTxMkO0kHcUf1Eh\nTLefgS/e+BW33twkmRKjq9jUGouSkpgSj4g2jrsZgk04skO9hGihkqHxX7RnuVro\ngs5dmeO9e4yIcbCmhI7WAnPwsg3RAAg/jax/ORVi3H+8O/MWk65JW0bBAoGASH1W\nZ6V5b+zUxZlsIaALo6gR3sZb8QVorIdTgcSSkdbeH+jO4tsc+8XhW8zYlXudo5O2\nqhek7lo+Vrii+mA8b50G6epARX11fifHrtBZfTDg09ltmU57kiB/Ytr1PzReG+tf\n59ituIoNyul6dBHdpiyhfZyOoAvwIxgkuwQPEZ0CgYAQZJRHUkymYK3hPG8MiXz5\neP2MCjFhOPGxfGUbwM6etEn8g+5XqGlDBRhuN+eg1r7Mt1Tdit80Tu1FO3IeyMYh\nK+0/yhiLWh772xihqH3G7ZB365HQ3oy/BUKALr8Pz/PeG2yufqTLOBj/o6q+FKEC\n5WJeHdug3z6lv0O1S5+QYQ==\n-----END PRIVATE KEY-----\n",
+    "client_email": "firebase-adminsdk-7ft3s@eco-friendly-tourism.iam.gserviceaccount.com",
+    "client_id": "104559135000331929951",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-7ft3s%40eco-friendly-tourism.iam.gserviceaccount.com",
+    "universe_domain": "googleapis.com"
+  }

@@ -6,6 +6,7 @@ import (
 	"go-gin-api-boilerplate/routes/v1/auth"
 	auth_utils_db_con "go-gin-api-boilerplate/routes/v1/auth/utils"
 	"go-gin-api-boilerplate/routes/v1/communication_management"
+	"go-gin-api-boilerplate/routes/v1/file_uploads"
 	restaurants "go-gin-api-boilerplate/routes/v1/restaurants"
 	restaurants_utils_db_con "go-gin-api-boilerplate/routes/v1/restaurants/utils"
 	common_utils "go-gin-api-boilerplate/utils"
@@ -28,4 +29,8 @@ func SetupV1Routes(r *gin.RouterGroup, database *sql.DB) {
 	restaurantRoutes := r.Group("/restaurants")
 	restaurants_utils_db_con.Initialize(database)
 	restaurants.RegisterRoutes(restaurantRoutes)
+
+	// Create a router group for communication management routes
+	fileUploadsRoutes := r.Group("/files")
+	file_uploads.RegisterRoutes(fileUploadsRoutes)
 }
