@@ -26,7 +26,15 @@ func InitializeRabbitMQConnection(amqpURI string) error {
 }
 
 func PublishToQueue(queueName string, message []byte) error {
-	err := RabbitMQChannel.Publish(
+	err := RabbitMQChannel.Confirm(false)
+	if err != nil {
+		// Handle the error
+	}
+
+	confirmations := RabbitMQChannel.NotifyPublish(make(chan amqp.Confirmation, 1))
+
+	// Publish the message
+	err = RabbitMQChannel.Publish(
 		"",        // exchange
 		queueName, // routing key
 		false,     // mandatory
@@ -36,18 +44,26 @@ func PublishToQueue(queueName string, message []byte) error {
 			Body:        message,
 		},
 	)
-	return err
+
+	// Wait for confirmation
+	confirmation := <-confirmations
+	if confirmation.Ack {
+		return err
+	} else {
+		return nil
+	}
+
 }
 
 func ConsumeFromQueue(queueName string) (<-chan amqp.Delivery, error) {
 	msgs, err := RabbitMQChannel.Consume(
-		queueName, // queue
-		"",        // consumer
-		true,      // auto-ack
-		false,     // exclusive
-		false,     // no-local
-		false,     // no-wait
-		nil,       // args
+		queueName,    // queue
+		"TEST_JANAK", // consumer
+		true,         // auto-ack
+		false,        // exclusive
+		false,        // no-local
+		false,        // no-wait
+		nil,          // args
 	)
 	return msgs, err
 }

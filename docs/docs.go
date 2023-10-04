@@ -159,6 +159,81 @@ const docTemplate = `{
                 }
             }
         },
+        "/communication/consume-message-test": {
+            "get": {
+                "description": "Consume a message from a RabbitMQ queue",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Communication Management API TEST"
+                ],
+                "summary": "Consume a message from RabbitMQ",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/communication_management.CommonResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/communication_management.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/communication/publish-message-test": {
+            "post": {
+                "description": "Publish a message to RabbitMQ queue",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Communication Management API TEST"
+                ],
+                "summary": "Publish a message to RabbitMQ",
+                "parameters": [
+                    {
+                        "description": "Message data",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/communication_management.PublishRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/communication_management.CommonResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/communication_management.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/communication_management.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/communication/send-test-email": {
             "post": {
                 "description": "Send a test email",
@@ -458,6 +533,22 @@ const docTemplate = `{
             }
         },
         "communication_management.CommonResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "communication_management.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "communication_management.PublishRequest": {
             "type": "object",
             "properties": {
                 "message": {

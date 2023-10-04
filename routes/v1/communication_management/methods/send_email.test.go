@@ -18,7 +18,6 @@ import (
 // @Success 200 {object} CommonResponse
 // @Router /communication/send-test-email [post]
 func SendEmailTest(c *gin.Context) {
-	fmt.Println("SendEmailTest")
 	var request communication_management_schemas.SendEmailTestRequest
 
 	// Parse email data from the request

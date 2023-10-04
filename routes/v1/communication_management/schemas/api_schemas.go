@@ -13,3 +13,7 @@ type SendEmailTestRequest struct {
 	Message string `json:"message"`
 	SendTo  string `json:"sendTo"`
 }
+
+type PublishRequest struct {
+	Message string `json:"message"`
+}

@@ -61,6 +61,16 @@ definitions:
       message:
         type: string
     type: object
+  communication_management.ErrorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  communication_management.PublishRequest:
+    properties:
+      message:
+        type: string
+    type: object
   communication_management.SendEmailTestRequest:
     properties:
       message:
@@ -210,6 +220,55 @@ paths:
       summary: Register a new customer
       tags:
       - Authentication
+  /communication/consume-message-test:
+    get:
+      consumes:
+      - application/json
+      description: Consume a message from a RabbitMQ queue
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/communication_management.CommonResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/communication_management.ErrorResponse'
+      summary: Consume a message from RabbitMQ
+      tags:
+      - Communication Management API TEST
+  /communication/publish-message-test:
+    post:
+      consumes:
+      - application/json
+      description: Publish a message to RabbitMQ queue
+      parameters:
+      - description: Message data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/communication_management.PublishRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/communication_management.CommonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/communication_management.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/communication_management.ErrorResponse'
+      summary: Publish a message to RabbitMQ
+      tags:
+      - Communication Management API TEST
   /communication/send-test-email:
     post:
       consumes:

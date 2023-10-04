@@ -6,7 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// RegisterRoutes sets up restaurant-related API routes.
 func RegisterRoutes(router *gin.RouterGroup) {
 	router.POST("/send-test-email", communication_management_methods.SendEmailTest)
+	router.POST("/publish-message-test", communication_management_methods.PublishMessageTest)
+	router.GET("/consume-message-test", communication_management_methods.ConsumeMessageTest)
 }
