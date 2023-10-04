@@ -37,12 +37,13 @@ import (
 // @schemes http
 
 func main() {
+	port := os.Getenv("PORT")
 	// Load environment variables from .env file
 	if err := godotenv.Load(); err != nil {
 		log.Fatal("Error loading .env file")
 	}
 
-	// Initialize the database connection (after loading environment variables)
+	// Initialize the database connection
 	database, err := db.InitDB()
 	if err != nil {
 		log.Fatalf("Failed to initialize the database: %v", err)
@@ -51,6 +52,7 @@ func main() {
 	r := gin.Default()
 	fmt.Println("Database connected...")
 
+	// Initialize the redis connection
 	err = common_utils.InitializeRedisConnection(os.Getenv("REDIS_HOST"), os.Getenv("REDIS_PASSWORD"), 0)
 	if err != nil {
 		log.Fatalf("Failed to initialize the redis connection: %v", err)
@@ -70,16 +72,12 @@ func main() {
 	defer common_utils.CloseRabbitMQConnection() // Defer closing the RabbitMQ connection
 	fmt.Println("RabbitMQ connected...")
 
-	// Read the PORT environment variable or default to 3000
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "3000" // Default port
-	}
-
 	// Swagger documentation setup
 	r.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
 	// HealthCheck route
 	r.GET("/api/health-check", v1_routes.HealthCheck)
+
 	// Create a router group for v1 routes
 	v1Routes := r.Group("/api/v1/")
 	v1_routes.SetupV1Routes(v1Routes, database)
