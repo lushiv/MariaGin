@@ -9,7 +9,7 @@ import (
 
 // RegisterRoutes sets up restaurant-related API routes.
 func RegisterRoutes(router *gin.RouterGroup) {
-	router.GET("", middleware.AuthMiddleware(), restaurants_methods.GetRestaurants)
+	router.GET("", middleware.UserMiddleware(), restaurants_methods.GetRestaurants)
 	router.POST("", restaurants_methods.AddRestaurant)
 	router.PUT("/:id", restaurants_methods.UpdateRestaurant)
 	router.DELETE("/:id", restaurants_methods.DeleteRestaurant)

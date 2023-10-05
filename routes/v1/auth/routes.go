@@ -10,5 +10,5 @@ import (
 func RegisterRoutes(router *gin.RouterGroup) {
 	router.POST("/register", auth_methods.RegisterUser)
 	router.POST("/login", auth_methods.LoginCustomer)
-	router.POST("/logout", middleware.AuthMiddleware(), auth_methods.LogoutCustomer)
+	router.POST("/logout", middleware.UserMiddleware(), auth_methods.LogoutCustomer)
 }

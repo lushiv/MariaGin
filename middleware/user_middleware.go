@@ -9,7 +9,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func AuthMiddleware() gin.HandlerFunc {
+var USER_ROLE = "user"
+
+func UserMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// Get the JWT token from the request header
 		tokenString := c.GetHeader("Authorization")
@@ -28,9 +30,9 @@ func AuthMiddleware() gin.HandlerFunc {
 		}
 
 		// Access the user claim
-		userID, ok := claims["user"].(string)
+		userID, ok := claims[USER_ROLE].(string)
 		if !ok {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid user information"})
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Permission error"})
 			c.Abort()
 			return
 		}
@@ -51,7 +53,7 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		c.Set("user", userID) // Set "user" in the context
+		c.Set(USER_ROLE, userID) // Set "user" in the context
 		c.Next()
 	}
 }
