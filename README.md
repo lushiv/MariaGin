@@ -30,8 +30,8 @@ MariaGin is your comprehensive starting point for developing robust and feature-
 - Redis and RabbitMQ: Harness the power of Redis and RabbitMQ for caching and messaging needs.
 ##  Local Machine Setup (Linux)
 Follow these steps to set up the project on your local machine:
-- Clone project from `git clone https://github.com/lushiv/go-gin-api-boilerplate.git`
-- Go the `cd go-gin-api-boilerplate`
+- Clone project from `git clone https://github.com/lushiv/MariaGin`
+- Go the `cd MariaGin`
 - Install all Dependencies using `go get ./...`
 - After that Make the script executable using `chmod +x start_server.sh`
 - After that make `.env` file from `.env.sample` and change file basis on your configurations
@@ -39,7 +39,7 @@ Follow these steps to set up the project on your local machine:
 - Now application is running on : [http://localhost:3000/docs/index.html#/](http://localhost:3000/docs/index.html#/)
 
 ### For Database Migration
- - Go to the dir `cd go-gin-api-boilerplate/db/db_migration/go_gin_api_boilerplate_db`
+ - Go to the dir `cd MariaGin/db/db_migration/maria_gin_db`
  - Next open the file `liquibase.properties`
  - Now change these things basis on your creation:
  -  <span style="color:red">YOUR_DATABASE_NAME</span>
@@ -47,7 +47,7 @@ Follow these steps to set up the project on your local machine:
  -  <span style="color:red">YOUR_DB_PASSWORD</span>
 
 ```
-changeLogFile: go_gin_api_boilerplate_db/changelog-master.xml
+changeLogFile: maria_gin_db/changelog-master.xml
 driver: com.mysql.cj.jdbc.Driver
 url: jdbc:mysql://localhost:3306/YOUR_DATABASE_NAME?autoReconnect=true&useSSL=false&maxReconnects=10&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
 username: YOUR_DB_USERNAME
