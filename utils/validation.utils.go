@@ -7,9 +7,6 @@ import (
 // ValidateEmail validates an email address.
 func ValidateEmail(email string) bool {
 	// Implement your email validation logic here.
-	// Return true if the email is valid, otherwise return false.
-	// You can use regular expressions or other validation methods.
-	// For simplicity, let's assume all emails are valid in this example.
 	return true
 }
 

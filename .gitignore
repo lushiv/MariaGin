@@ -24,6 +24,13 @@ go.work
 /docs
 /swagger
 
+# Log files
+*.log
+
+# Environment files
+.env
+
+
 # Add any other documentation-related directories or files you want to ignore
 # /docs-generated
 # /custom-docs-file.html

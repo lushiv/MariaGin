@@ -12,6 +12,7 @@ import (
 
 	// Import your API package
 	common_utils "go-gin-api-boilerplate/utils" // Import your database package
+	logger "go-gin-api-boilerplate/utils"       // Import your database package
 
 	// Import your API package
 	"github.com/gin-gonic/gin"
@@ -38,9 +39,12 @@ import (
 
 func main() {
 
+	// Initialize the logger
+	logger.InitLogger()
+
 	// Load environment variables from .env file
 	if err := godotenv.Load(); err != nil {
-		log.Fatal("Error loading .env file")
+		logger.Error("Error loading .env file")
 	}
 
 	// Initialize the database connection
