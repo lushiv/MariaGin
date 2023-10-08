@@ -17,17 +17,6 @@ MariaGin is your comprehensive starting point for developing robust and feature-
 ![Docker](https://img.shields.io/badge/-Docker-05122A?style=flat&logo=docker)&nbsp;
 ![Script](https://img.shields.io/badge/-Script.sh-05122A?style=flat&logo=gnu-bash)&nbsp;
 
-
-- Go Gin Framework: Harness the power of the Gin web framework for rapid development, routing, and middleware handling.
-- Swagger Documentation: Effortlessly create and maintain API documentation with Swagger, enabling developers and consumers to understand your API endpoints intuitively.
-- MariaDB MySQL: Seamlessly integrate the MariaDB MySQL database for efficient data storage and retrieval.
-- Ready-to-Use Templates: Save time with pre-configured templates and essential packages for a fully functional backend.
-- JWT Authentication: Implement secure authentication and authorization with JSON Web Tokens (JWT).
-- Email Services: Utilize SendGrid for email notification and communication.
-- Database Migrations: Simplify database schema management using Liquibase for smooth and controlled migrations.
-- Docker Support: Easily containerize your application with Docker for deployment flexibility.
-- Git Version Control: Manage and collaborate on your project with Git, making it easier to track changes and contributions.
-- Redis and RabbitMQ: Harness the power of Redis and RabbitMQ for caching and messaging needs.
 ##  Local Machine Setup (Linux)
 Follow these steps to set up the project on your local machine:
 - Clone project from `git clone https://github.com/lushiv/MariaGin`
@@ -35,6 +24,7 @@ Follow these steps to set up the project on your local machine:
 - Install all Dependencies using `go get ./...`
 - After that Make the script executable using `chmod +x start_server.sh`
 - After that make `.env` file from `.env.sample` and change file basis on your configurations
+- Set up database migration by following the database migration steps
 - Now Run your server using the script: `./start_server.sh`
 - Now application is running on : [http://localhost:3000/docs/index.html#/](http://localhost:3000/docs/index.html#/)
 
