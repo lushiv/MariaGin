@@ -82,7 +82,7 @@ func main() {
 	}
 
 	// Initialize Firebase
-	if err := common_utils.InitializeFirebaseApp("configs/firebase-admin-sdk.json"); err != nil {
+	if err := common_utils.InitializeFirebaseApp("configs/local_firebase_configs"); err != nil { // replace with your file
 		log.Fatalf("Failed to initialize Firebase: %v", err)
 	}
 

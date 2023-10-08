@@ -34,3 +34,4 @@ go.work
 # Add any other documentation-related directories or files you want to ignore
 # /docs-generated
 # /custom-docs-file.html
+*.local_firebase_configs.json
