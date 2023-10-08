@@ -1,7 +1,9 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"time"
@@ -21,6 +23,29 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
+type AppConfig struct {
+	DatabaseEnabled bool `json:"database_enabled"`
+	RedisEnabled    bool `json:"redis_enabled"`
+	RabbitMQEnabled bool `json:"rabbitmq_enabled"`
+	FirebaseEnabled bool `json:"firebase_enabled"`
+}
+
+var AppSettings AppConfig
+
+func LoadConfig() error {
+	// Load and parse the configuration file
+	data, err := ioutil.ReadFile("configs/app_config.json")
+	if err != nil {
+		return err
+	}
+
+	if err := json.Unmarshal(data, &AppSettings); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // @title MariaGin API Docs
 // @version 1.0
 // @description This is a sample docs.
@@ -38,7 +63,6 @@ import (
 // @schemes http
 
 func main() {
-
 	// Initialize the logger
 	logger.InitLogger()
 
@@ -47,46 +71,53 @@ func main() {
 		logger.Error("Error loading .env file")
 	}
 
-	// Initialize the database connection
+	// Load configuration settings
+	if err := LoadConfig(); err != nil {
+		log.Fatalf("Failed to load configuration: %v", err)
+	}
+
+	r := gin.Default()
+
+	// Initialize the database connection if enabled
+
 	database, err := db.InitDB()
 	if err != nil {
 		log.Fatalf("Failed to initialize the database: %v", err)
 	}
 	defer database.Close() // Close the database connection when the application exits
-	r := gin.Default()
 	fmt.Println("Database connected...")
 
-	// Initialize the redis connection
-	err = common_utils.InitializeRedisConnection(os.Getenv("REDIS_HOST"), os.Getenv("REDIS_PASSWORD"), 0)
-	if err != nil {
-		log.Fatalf("Failed to initialize the redis connection: %v", err)
-	}
-	fmt.Println("Redis server connected...")
-	defer common_utils.RedisClient.Close() // Defer closing the Redis connection
-
-	// Initialize RabbitMQ connection
-	rabbitMQURI := os.Getenv("RABBITMQ_URI")
-	if rabbitMQURI == "" {
-		log.Fatal("RABBITMQ_URI environment variable not set")
-	}
-	err = common_utils.InitializeRabbitMQConnection(rabbitMQURI)
-	if err != nil {
-		log.Fatalf("Failed to initialize the RabbitMQ connection: %v", err)
-	}
-	defer common_utils.CloseRabbitMQConnection() // Defer closing the RabbitMQ connection
-	fmt.Println("RabbitMQ connected...")
-
-	// Load environment variables from .env file
-	if err := godotenv.Load(); err != nil {
-		log.Fatal("Error loading .env file")
+	// Initialize the redis connection if enabled
+	if AppSettings.RedisEnabled {
+		err := common_utils.InitializeRedisConnection(os.Getenv("REDIS_HOST"), os.Getenv("REDIS_PASSWORD"), 0)
+		if err != nil {
+			log.Fatalf("Failed to initialize the redis connection: %v", err)
+		}
+		defer common_utils.RedisClient.Close() // Defer closing the Redis connection
+		fmt.Println("Redis server connected...")
 	}
 
-	// Initialize Firebase
-	if err := common_utils.InitializeFirebaseApp("configs/local_firebase_configs"); err != nil { // replace with your file
-		log.Fatalf("Failed to initialize Firebase: %v", err)
+	// Initialize RabbitMQ connection if enabled
+	if AppSettings.RabbitMQEnabled {
+		rabbitMQURI := os.Getenv("RABBITMQ_URI")
+		if rabbitMQURI == "" {
+			log.Fatal("RABBITMQ_URI environment variable not set")
+		}
+		err := common_utils.InitializeRabbitMQConnection(rabbitMQURI)
+		if err != nil {
+			log.Fatalf("Failed to initialize the RabbitMQ connection: %v", err)
+		}
+		defer common_utils.CloseRabbitMQConnection() // Defer closing the RabbitMQ connection
+		fmt.Println("RabbitMQ connected...")
 	}
 
-	fmt.Println("Firebase connected...")
+	// Initialize Firebase if enabled
+	if AppSettings.FirebaseEnabled {
+		if err := common_utils.InitializeFirebaseApp("configs/local_firebase_configs"); err != nil {
+			log.Fatalf("Failed to initialize Firebase: %v", err)
+		}
+		fmt.Println("Firebase connected...")
+	}
 
 	port := os.Getenv("PORT")
 
@@ -98,7 +129,7 @@ func main() {
 
 	// Create a router group for v1 routes
 	v1Routes := r.Group("/api/v1/")
-	v1_routes.SetupV1Routes(v1Routes, database)
+	v1_routes.SetupV1Routes(v1Routes, database) // Pass the database if it's enabled
 
 	// Attach Logger and Recovery middleware
 	r.Use(gin.Logger())

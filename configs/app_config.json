@@ -1,0 +1,6 @@
+{
+    "redis_enabled": false,
+    "rabbitmq_enabled": false,
+    "firebase_enabled": false
+  }
+  
